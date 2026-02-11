@@ -19,12 +19,18 @@
         
         /* Login Box Responsive */
         .login-box { background: white; padding: 30px; border-radius: 12px; max-width: 90%; margin: 50px auto; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        
+        /* Contenedor del input de password para el icono */
+        .password-container { position: relative; width: 100%; display: flex; align-items: center; }
+        .password-container input { padding-right: 45px; } /* Espacio para el ojo */
+        .toggle-btn { position: absolute; right: 10px; background: none; border: none; cursor: pointer; color: #64748b; font-size: 18px; padding: 5px; }
+
         .security-notice { font-size: 11px; color: #d63031; margin-top: 20px; font-weight: bold; text-transform: uppercase; border: 1px solid #fab1a0; padding: 10px; border-radius: 5px; background: #fff5f5; }
         
         /* Content Container Responsive */
         .admin-content { display: none; max-width: 850px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 20px rgba(0,0,0,0.05); position: relative; }
         
-        input, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; /* Evita zoom automático en iOS */ font-family: inherit; color: #000; box-sizing: border-box; }
+        input, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; font-family: inherit; color: #000; box-sizing: border-box; }
         
         .btn { background: #0a1931; color: white; border: none; padding: 15px 25px; cursor: pointer; border-radius: 5px; font-weight: bold; transition: 0.3s; display: inline-block; text-decoration: none; font-size: 16px; width: 100%; margin-bottom: 10px; box-sizing: border-box; }
         .btn:hover { background: #185adb; }
@@ -33,7 +39,6 @@
         .black-bar-container { background: #1e293b; color: white; padding: 10px; margin-bottom: 5px; display: flex; align-items: center; border-radius: 6px; }
         .black-bar-input { color: white !important; border: none !important; background: transparent !important; font-weight: bold !important; padding: 0 !important; margin: 0 0 0 10px !important; width: 100% !important; cursor: pointer; font-size: 16px; }
 
-        /* TABLA RESPONSIVA */
         .table-items { width: 100%; border-collapse: collapse; margin-top: 20px; }
         .table-items th { background: #1e293b; color: white; padding: 12px; text-align: left; text-transform: uppercase; font-size: 13px; }
         .table-items td { border-bottom: 1px solid #eee; padding: 10px; }
@@ -42,10 +47,7 @@
             .pdf-header { flex-direction: column; text-align: center; align-items: center !important; }
             .company-info { margin-bottom: 20px; order: 2; }
             .logo-rc { order: 1; margin-bottom: 15px; }
-            
             .grid-header { grid-template-columns: 1fr !important; gap: 20px !important; }
-            
-            /* Convertir tabla en tarjetas para móvil */
             .table-items thead { display: none; }
             .table-items td { display: block; width: 100%; padding: 5px 0; border: none; }
             .table-items tr { display: block; margin-bottom: 20px; border-bottom: 2px solid #1e293b; padding-bottom: 10px; }
@@ -55,10 +57,9 @@
         .total-section { margin-top: 30px; display: flex; flex-direction: column; align-items: flex-end; }
         .total-box { background: #1e293b; color: white; padding: 15px 30px; min-width: 200px; display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; border-radius: 6px; width: 100%; box-sizing: border-box; }
         
-        /* CONFIGURACIÓN DE IMPRESIÓN */
         @media print {
             body { background: white; padding: 0; color: #000 !important; }
-            .no-print, .btn, .add-row-btn, .btn-logout { display: none !important; }
+            .no-print, .btn, .add-row-btn, .btn-logout, .toggle-btn { display: none !important; }
             .admin-content { display: block !important; box-shadow: none; padding: 0; width: 100%; }
             .table-items thead { display: table-header-group !important; }
             .table-items tr { display: table-row !important; border: none !important; }
@@ -80,8 +81,16 @@
     <div id="login" class="login-box">
         <img src="logo2.png" style="width: 80px; margin-bottom: 20px;">
         <h2>Nelson Rodriguez</h2>
-        <input type="password" id="pass" placeholder="Password">
-        <button class="btn" onclick="checkPass()">LOGIN</button>
+        
+        <div class="password-container">
+            <input type="password" id="pass" placeholder="Password">
+            <button type="button" class="toggle-btn" onclick="togglePassword()">
+                <i id="eye-icon" class="fas fa-eye"></i>
+            </button>
+        </div>
+
+        <button class="btn" onclick="checkPass()" style="margin-top: 10px;">LOGIN</button>
+        
         <div class="security-notice">
             <i class="fas fa-user-shield"></i><br>
             Restricted Area: Authorized Use Only for Robert Construccion.
@@ -128,8 +137,7 @@
                     <th width="100">AMOUNT</th>
                 </tr>
             </thead>
-            <tbody>
-                </tbody>
+            <tbody></tbody>
         </table>
         
         <button class="btn add-row-btn no-print" onclick="addRow()" style="margin-top:20px; background: #64748b;">
@@ -162,6 +170,21 @@
 
         window.onload = function() {
             if(sessionStorage.getItem("authenticated") === "true") { showPanel(); }
+        }
+
+        // Función para mostrar/ocultar contraseña
+        function togglePassword() {
+            const passInput = document.getElementById("pass");
+            const eyeIcon = document.getElementById("eye-icon");
+            if (passInput.type === "password") {
+                passInput.type = "text";
+                eyeIcon.classList.remove("fa-eye");
+                eyeIcon.classList.add("fa-eye-slash");
+            } else {
+                passInput.type = "password";
+                eyeIcon.classList.remove("fa-eye-slash");
+                eyeIcon.classList.add("fa-eye");
+            }
         }
 
         function checkPass() {

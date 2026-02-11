@@ -33,7 +33,7 @@
         nav {
             background: var(--azul-oscuro);
             color: white;
-            padding: 1rem 5%;
+            padding: 0.8rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -43,183 +43,113 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
+        /* Logo Link */
+        .logo-link { text-decoration: none; color: white; display: flex; align-items: center; transition: 0.3s; }
+        .logo-link:hover { opacity: 0.8; }
         .logo-container { display: flex; align-items: center; gap: 10px; }
         .logo-img { height: 50px; width: 50px; border-radius: 50%; object-fit: cover; border: 2px solid var(--blanco); }
         .logo-text { font-size: 1.1rem; letter-spacing: 1px; font-weight: 800; }
         .logo-text span { color: var(--azul-claro); }
 
-        nav ul { display: flex; list-style: none; gap: 15px; align-items: center; }
-        nav ul li a { color: white; text-decoration: none; font-size: 0.8rem; font-weight: 600; transition: 0.3s; text-transform: uppercase; }
-        nav ul li a:hover { color: var(--azul-claro); }
+        /* Nav Menu */
+        .nav-menu { display: flex; list-style: none; gap: 20px; align-items: center; }
+        .nav-menu li a { color: white; text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: 0.3s; text-transform: uppercase; }
+        .nav-menu li a:hover { color: var(--azul-claro); }
 
-        /* Mobile Adjustments for Nav */
+        /* Hamburger Button */
+        .menu-toggle { display: none; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+
         @media (max-width: 992px) {
-            nav { flex-direction: column; padding: 1rem; }
-            .logo-container { margin-bottom: 15px; }
-            nav ul { flex-wrap: wrap; justify-content: center; gap: 10px; }
-            nav ul li a { font-size: 0.75rem; }
+            .menu-toggle { display: block; }
+            .nav-menu {
+                position: absolute;
+                top: 100%;
+                left: -100%;
+                flex-direction: column;
+                background: var(--azul-oscuro);
+                width: 100%;
+                text-align: center;
+                transition: 0.4s;
+                padding: 20px 0;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+            }
+            .nav-menu.active { left: 0; }
+            .nav-menu li { margin: 15px 0; }
         }
 
-        /* --- DYNAMIC SLIDER --- */
-        .slider-container {
-            position: relative;
-            width: 100%;
-            height: 80vh;
-            min-height: 500px;
-            overflow: hidden;
-            background-color: var(--azul-oscuro);
-        }
-
-        .slide {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0;
-            transition: opacity 1.5s ease-in-out;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-size: cover;
-            background-position: center;
-        }
-
+        /* --- SLIDER --- */
+        .slider-container { position: relative; width: 100%; height: 85vh; min-height: 500px; overflow: hidden; background-color: var(--azul-oscuro); }
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1.2s ease; display: flex; justify-content: center; align-items: center; background-size: cover; background-position: center; }
         .slide.active { opacity: 1; }
+        .slide::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(10, 25, 49, 0.7), rgba(10, 25, 49, 0.4)); }
+        .hero-content { position: relative; z-index: 2; text-align: center; max-width: 800px; padding: 0 20px; color: white; }
+        .hero-content h1 { font-size: clamp(1.8rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 20px; }
+        .btn-call { background: var(--azul-vibrante); color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: 800; transition: 0.4s; display: inline-block; text-transform: uppercase; border: none; }
+        .btn-call:hover { transform: translateY(-3px); background: var(--azul-claro); }
 
-        .slide::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(10, 25, 49, 0.8), rgba(10, 25, 49, 0.4));
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            max-width: 90%;
-            padding: 0 15px;
-            color: white;
-        }
-
-        .hero-content h1 { 
-            font-size: clamp(1.8rem, 5vw, 4rem); 
-            line-height: 1.2;
-            margin-bottom: 15px; 
-            text-shadow: 2px 4px 10px rgba(0,0,0,0.5);
-        }
-
-        .hero-content p { 
-            font-size: clamp(0.9rem, 2vw, 1.2rem); 
-            margin-bottom: 30px; 
-            font-weight: 300;
-        }
-
-        .btn-call {
-            background: var(--azul-vibrante);
-            color: white;
-            padding: 15px 30px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: 800;
-            font-size: 1rem;
-            transition: 0.4s;
-            display: inline-block;
-            box-shadow: 0 10px 20px rgba(24, 90, 219, 0.3);
-            text-transform: uppercase;
-        }
-
-        /* --- SERVICES --- */
-        .services { padding: 60px 5%; background: var(--gris-fondo); text-align: center; }
-        .services h2 { margin-bottom: 40px; font-size: 2rem; color: var(--azul-oscuro); }
-
-        .services-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 25px; 
-        }
+        /* --- SECTIONS --- */
+        section { padding: 80px 8%; }
+        .services { background: var(--gris-fondo); text-align: center; }
+        .services h2 { margin-bottom: 50px; font-size: 2.2rem; position: relative; padding-bottom: 10px; }
+        .services h2::after { content: ''; width: 60px; height: 3px; background: var(--azul-vibrante); position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); }
         
-        .service-card {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: 0.4s;
-        }
-        .service-img { height: 200px; width: 100%; object-fit: cover; }
-        .service-info { padding: 25px; }
-        .service-info i { font-size: 2rem; color: var(--azul-vibrante); margin-bottom: 15px; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .service-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .service-img { height: 220px; width: 100%; object-fit: cover; }
+        .service-info { padding: 30px; }
+        .service-info i { font-size: 2.5rem; color: var(--azul-vibrante); margin-bottom: 20px; }
 
-        /* --- FORM STYLES --- */
-        .contact-form-section { padding: 60px 5%; background: white; }
-        .form-container { max-width: 800px; margin: 0 auto; text-align: center; }
-        .form-container h2 { font-size: 1.8rem; margin-bottom: 10px; }
-        .form-container p { margin-bottom: 30px; font-size: 0.9rem; }
-
-        .main-form { text-align: left; background: var(--gris-fondo); padding: 30px; border-radius: 15px; }
-
-        .form-grid { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 15px; 
-        }
+        /* --- FORM --- */
+        .contact-form-section { background: white; text-align: center; }
+        .form-container { max-width: 800px; margin: 0 auto; }
+        .main-form { text-align: left; background: var(--gris-fondo); padding: 40px; border-radius: 15px; margin-top: 40px; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .input-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+        .input-group label { font-weight: 600; color: var(--azul-oscuro); font-size: 0.9rem; }
+        .input-group input, .input-group select, .input-group textarea { padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-family: inherit; font-size: 1rem; }
+        .btn-submit { width: 100%; background: var(--azul-oscuro); color: white; padding: 15px; border: none; border-radius: 6px; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        .btn-submit:hover { background: var(--azul-vibrante); }
 
         @media (max-width: 600px) {
+            section { padding: 50px 5%; }
             .form-grid { grid-template-columns: 1fr; }
-            .services { padding: 40px 5%; }
-            .contact-form-section { padding: 40px 5%; }
             .main-form { padding: 20px; }
         }
 
-        .input-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 15px; }
-        .input-group label { font-weight: 600; color: var(--azul-oscuro); font-size: 0.85rem; }
-        .input-group input, .input-group select, .input-group textarea {
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            width: 100%;
-        }
+        /* --- ABOUT --- */
+        .about { display: flex; align-items: center; gap: 50px; flex-wrap: wrap; background: white; }
+        .about-img { flex: 1; min-width: 300px; text-align: center; }
+        .logo-big { width: 100%; max-width: 350px; border-radius: 50%; }
+        .about-text { flex: 1.5; min-width: 300px; }
 
-        .btn-submit {
-            width: 100%;
-            background: var(--azul-oscuro);
-            color: white;
-            padding: 15px;
-            border: none;
-            border-radius: 5px;
-            font-weight: 800;
-            text-transform: uppercase;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        /* --- ABOUT SECTION --- */
-        .about { padding: 60px 5%; display: flex; align-items: center; gap: 30px; flex-wrap: wrap; background: white; }
-        .about-img { flex: 1; text-align: center; min-width: 280px; }
-        .logo-big { width: 100%; max-width: 300px; border-radius: 50%; }
-        .about-text { flex: 1.5; min-width: 280px; }
-        .about-text h2 { font-size: 1.8rem; margin-bottom: 15px; }
-
-        /* --- CONTACT --- */
-        .contact { background: var(--azul-oscuro); color: white; padding: 80px 5%; text-align: center; }
-        .phone-num { font-size: clamp(1.5rem, 7vw, 3.5rem); color: var(--azul-claro); text-decoration: none; font-weight: 800; display: block; margin: 20px 0; }
-
-        footer { background: #050d1a; color: rgba(255,255,255,0.4); text-align: center; padding: 30px; font-size: 0.8rem; }
+        /* --- FOOTER --- */
+        .contact-cta { background: var(--azul-oscuro); color: white; text-align: center; padding: 100px 5%; }
+        .phone-num { font-size: clamp(2rem, 8vw, 4rem); color: var(--azul-claro); text-decoration: none; font-weight: 800; margin: 20px 0; display: block; }
+        footer { background: #050d1a; color: rgba(255,255,255,0.5); text-align: center; padding: 40px; font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo-container">
-            <img src="logo.png" alt="Robert Construccion Logo" class="logo-img"> 
-            <div class="logo-text">Robert <span>Construccion</span></div>
-        </div>
-        <ul>
+        <a href="#home" class="logo-link">
+            <div class="logo-container">
+                <img src="logo.png" alt="Robert Construccion Logo" class="logo-img"> 
+                <div class="logo-text">Robert <span>Construccion</span></div>
+            </div>
+        </a>
+
+        <button class="menu-toggle" id="mobile-menu">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <ul class="nav-menu" id="nav-list">
             <li><a href="#home">Home</a></li>
             <li><a href="#services">Services</a></li>
             <li><a href="#quote">Free Quote</a></li> 
-            <li><a href="#about">About</a></li>
+            <li><a href="#about">About Us</a></li>
             <li><a href="#contact">Contact</a></li>
             <li>
-                <a href="admin.html" style="background: var(--azul-vibrante); padding: 5px 10px; border-radius: 5px; color: white;">
+                <a href="admin.html" style="background: var(--azul-vibrante); padding: 8px 15px; border-radius: 5px; color: white; font-weight: bold; border: 1px solid var(--azul-claro);">
                     <i class="fas fa-lock"></i> ADMIN
                 </a>
             </li>
@@ -230,22 +160,15 @@
         <div class="slide active" style="background-image: url('Painting2.webp');">
             <div class="hero-content">
                 <h1>Professional Painting with Luxury Finishes</h1>
-                <p>Responsibility and quality is our priority.</p>
+                <p>Responsibility and quality is our priority. We transform your home.</p>
                 <a href="tel:+18432272382" class="btn-call"><i class="fas fa-phone-alt"></i> Call Now!</a>
             </div>
         </div>
         <div class="slide" style="background-image: url('Restoration.png');">
             <div class="hero-content">
-                <h1>Experts in Restoration & Remodeling</h1>
+                <h1>Experts in Restoration and Remodeling</h1>
                 <p>We restore beauty and safety to your structures.</p>
                 <a href="#quote" class="btn-call"><i class="fas fa-hammer"></i> Get a Quote</a>
-            </div>
-        </div>
-        <div class="slide" style="background-image: url('Plumbing.png');">
-            <div class="hero-content">
-                <h1>Guaranteed Plumbing Services</h1>
-                <p>Fast and efficient solutions for any emergency.</p>
-                <a href="#quote" class="btn-call"><i class="fas fa-faucet-drip"></i> Contact Us</a>
             </div>
         </div>
     </header>
@@ -293,14 +216,14 @@
                     </div>
                     <div class="input-group">
                         <label>Email Address</label>
-                        <input type="email" name="_replyto" required placeholder="name@mail.com">
+                        <input type="email" name="_replyto" required placeholder="example@mail.com">
                     </div>
                     <div class="input-group">
                         <label>Phone Number</label>
                         <input type="tel" name="phone" required placeholder="843-000-0000">
                     </div>
                     <div class="input-group">
-                        <label>Service</label>
+                        <label>Service of Interest</label>
                         <select name="service">
                             <option value="Painting">Painting</option>
                             <option value="Restoration">Restoration</option>
@@ -311,7 +234,7 @@
                 </div>
                 <div class="input-group">
                     <label>Project Details</label>
-                    <textarea name="message" rows="4" required placeholder="How can we help you?"></textarea>
+                    <textarea name="message" rows="5" required placeholder="Describe what you need..."></textarea>
                 </div>
                 <button type="submit" class="btn-submit">Send Message</button>
             </form>
@@ -328,10 +251,10 @@
         </div>
     </section>
 
-    <section class="contact" id="contact">
-        <h2>Ready to start?</h2>
+    <section class="contact-cta" id="contact">
+        <h2>Ready to start your project?</h2>
         <a href="tel:+18432272382" class="phone-num">+1 843-227-2382</a>
-        <p><i class="fas fa-star"></i> Quality Guaranteed | Responsibility</p>
+        <p><i class="fas fa-star" style="color: var(--azul-claro);"></i> Guaranteed Quality | Total Responsibility</p>
     </section>
 
     <footer>
@@ -339,16 +262,30 @@
     </footer>
 
     <script>
+        // SLIDER
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
-
         function nextSlide() {
             slides[currentSlide].classList.remove('active');
             currentSlide = (currentSlide + 1) % slides.length;
             slides[currentSlide].classList.add('active');
         }
-
         setInterval(nextSlide, 5000);
+
+        // MOBILE MENU TOGGLE
+        const menuBtn = document.getElementById('mobile-menu');
+        const navMenu = document.getElementById('nav-list');
+        
+        menuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
     </script>
 </body>
 </html>
