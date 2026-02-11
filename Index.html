@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robert Construccion | Painting, Restoration & Plumbing</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --azul-oscuro: #0a1931;
+            --azul-vibrante: #185adb;
+            --azul-claro: #00a8ff;
+            --blanco: #ffffff;
+            --gris-fondo: #f8f9fa;
+            --texto: #2d3436;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--texto);
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 { font-family: 'Montserrat', sans-serif; font-weight: 700; text-transform: uppercase; }
+
+        /* --- NAVIGATION --- */
+        nav {
+            background: var(--azul-oscuro);
+            color: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .logo-container { display: flex; align-items: center; gap: 10px; }
+        .logo-img { height: 50px; width: 50px; border-radius: 50%; object-fit: cover; border: 2px solid var(--blanco); }
+        .logo-text { font-size: 1.1rem; letter-spacing: 1px; font-weight: 800; }
+        .logo-text span { color: var(--azul-claro); }
+
+        nav ul { display: flex; list-style: none; gap: 15px; align-items: center; }
+        nav ul li a { color: white; text-decoration: none; font-size: 0.8rem; font-weight: 600; transition: 0.3s; text-transform: uppercase; }
+        nav ul li a:hover { color: var(--azul-claro); }
+
+        /* Mobile Adjustments for Nav */
+        @media (max-width: 992px) {
+            nav { flex-direction: column; padding: 1rem; }
+            .logo-container { margin-bottom: 15px; }
+            nav ul { flex-wrap: wrap; justify-content: center; gap: 10px; }
+            nav ul li a { font-size: 0.75rem; }
+        }
+
+        /* --- DYNAMIC SLIDER --- */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 80vh;
+            min-height: 500px;
+            overflow: hidden;
+            background-color: var(--azul-oscuro);
+        }
+
+        .slide {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .slide.active { opacity: 1; }
+
+        .slide::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(10, 25, 49, 0.8), rgba(10, 25, 49, 0.4));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 90%;
+            padding: 0 15px;
+            color: white;
+        }
+
+        .hero-content h1 { 
+            font-size: clamp(1.8rem, 5vw, 4rem); 
+            line-height: 1.2;
+            margin-bottom: 15px; 
+            text-shadow: 2px 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .hero-content p { 
+            font-size: clamp(0.9rem, 2vw, 1.2rem); 
+            margin-bottom: 30px; 
+            font-weight: 300;
+        }
+
+        .btn-call {
+            background: var(--azul-vibrante);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 800;
+            font-size: 1rem;
+            transition: 0.4s;
+            display: inline-block;
+            box-shadow: 0 10px 20px rgba(24, 90, 219, 0.3);
+            text-transform: uppercase;
+        }
+
+        /* --- SERVICES --- */
+        .services { padding: 60px 5%; background: var(--gris-fondo); text-align: center; }
+        .services h2 { margin-bottom: 40px; font-size: 2rem; color: var(--azul-oscuro); }
+
+        .services-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 25px; 
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: 0.4s;
+        }
+        .service-img { height: 200px; width: 100%; object-fit: cover; }
+        .service-info { padding: 25px; }
+        .service-info i { font-size: 2rem; color: var(--azul-vibrante); margin-bottom: 15px; }
+
+        /* --- FORM STYLES --- */
+        .contact-form-section { padding: 60px 5%; background: white; }
+        .form-container { max-width: 800px; margin: 0 auto; text-align: center; }
+        .form-container h2 { font-size: 1.8rem; margin-bottom: 10px; }
+        .form-container p { margin-bottom: 30px; font-size: 0.9rem; }
+
+        .main-form { text-align: left; background: var(--gris-fondo); padding: 30px; border-radius: 15px; }
+
+        .form-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 15px; 
+        }
+
+        @media (max-width: 600px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .services { padding: 40px 5%; }
+            .contact-form-section { padding: 40px 5%; }
+            .main-form { padding: 20px; }
+        }
+
+        .input-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 15px; }
+        .input-group label { font-weight: 600; color: var(--azul-oscuro); font-size: 0.85rem; }
+        .input-group input, .input-group select, .input-group textarea {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: var(--azul-oscuro);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        /* --- ABOUT SECTION --- */
+        .about { padding: 60px 5%; display: flex; align-items: center; gap: 30px; flex-wrap: wrap; background: white; }
+        .about-img { flex: 1; text-align: center; min-width: 280px; }
+        .logo-big { width: 100%; max-width: 300px; border-radius: 50%; }
+        .about-text { flex: 1.5; min-width: 280px; }
+        .about-text h2 { font-size: 1.8rem; margin-bottom: 15px; }
+
+        /* --- CONTACT --- */
+        .contact { background: var(--azul-oscuro); color: white; padding: 80px 5%; text-align: center; }
+        .phone-num { font-size: clamp(1.5rem, 7vw, 3.5rem); color: var(--azul-claro); text-decoration: none; font-weight: 800; display: block; margin: 20px 0; }
+
+        footer { background: #050d1a; color: rgba(255,255,255,0.4); text-align: center; padding: 30px; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo-container">
+            <img src="logo.png" alt="Robert Construccion Logo" class="logo-img"> 
+            <div class="logo-text">Robert <span>Construccion</span></div>
+        </div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#quote">Free Quote</a></li> 
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li>
+                <a href="admin.html" style="background: var(--azul-vibrante); padding: 5px 10px; border-radius: 5px; color: white;">
+                    <i class="fas fa-lock"></i> ADMIN
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <header class="slider-container" id="home">
+        <div class="slide active" style="background-image: url('Painting2.webp');">
+            <div class="hero-content">
+                <h1>Professional Painting with Luxury Finishes</h1>
+                <p>Responsibility and quality is our priority.</p>
+                <a href="tel:+18432272382" class="btn-call"><i class="fas fa-phone-alt"></i> Call Now!</a>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('Restoration.png');">
+            <div class="hero-content">
+                <h1>Experts in Restoration & Remodeling</h1>
+                <p>We restore beauty and safety to your structures.</p>
+                <a href="#quote" class="btn-call"><i class="fas fa-hammer"></i> Get a Quote</a>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('Plumbing.png');">
+            <div class="hero-content">
+                <h1>Guaranteed Plumbing Services</h1>
+                <p>Fast and efficient solutions for any emergency.</p>
+                <a href="#quote" class="btn-call"><i class="fas fa-faucet-drip"></i> Contact Us</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="services" id="services">
+        <h2>Our Specialties</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <img src="Especialidades/Painting2.png" class="service-img" alt="Painting">
+                <div class="service-info">
+                    <i class="fas fa-paint-roller"></i>
+                    <h3>Painting</h3>
+                    <p>Durable and aesthetic finishes for all types of surfaces.</p>
+                </div>
+            </div>
+            <div class="service-card">
+                <img src="Especialidades/Constructor1.png" class="service-img" alt="Restoration">
+                <div class="service-info">
+                    <i class="fas fa-hammer"></i>
+                    <h3>Restoration</h3>
+                    <p>Complete renovation with superior quality standards.</p>
+                </div>
+            </div>
+            <div class="service-card">
+                <img src="Especialidades/Plumbing3.png" class="service-img" alt="Plumbing">
+                <div class="service-info">
+                    <i class="fas fa-faucet-drip"></i>
+                    <h3>Plumbing</h3>
+                    <p>Experts in residential installations and repairs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-form-section" id="quote">
+        <div class="form-container">
+            <h2>Request a Free Quote</h2>
+            <p>Send us your project details and we will contact you shortly.</p>
+
+            <form action="https://formspree.io/f/mkovndob" method="POST" class="main-form"> 
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label>Full Name</label>
+                        <input type="text" name="name" required placeholder="John Doe">
+                    </div>
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <input type="email" name="_replyto" required placeholder="name@mail.com">
+                    </div>
+                    <div class="input-group">
+                        <label>Phone Number</label>
+                        <input type="tel" name="phone" required placeholder="843-000-0000">
+                    </div>
+                    <div class="input-group">
+                        <label>Service</label>
+                        <select name="service">
+                            <option value="Painting">Painting</option>
+                            <option value="Restoration">Restoration</option>
+                            <option value="Plumbing">Plumbing</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Project Details</label>
+                    <textarea name="message" rows="4" required placeholder="How can we help you?"></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="about-img">
+            <img src="logo.png" alt="Robert Construccion Logo" class="logo-big">
+        </div>
+        <div class="about-text">
+            <h2>Nelson Rodriguez</h2>
+            <p>Under the leadership of Nelson Rodriguez, Robert Construccion has become synonymous with excellence. Our commitment is to deliver projects that reflect our passion for quality.</p>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <h2>Ready to start?</h2>
+        <a href="tel:+18432272382" class="phone-num">+1 843-227-2382</a>
+        <p><i class="fas fa-star"></i> Quality Guaranteed | Responsibility</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Robert Construccion. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        setInterval(nextSlide, 5000);
+    </script>
+</body>
+</html>

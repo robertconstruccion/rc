@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Quote Generator | Robert Construccion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
+
+    <style>
+        :root {
+            --primary-elegant: #1e293b;
+            --bg-light: #f0f2f5;
+        }
+
+        body { font-family: 'Open Sans', sans-serif; background: var(--bg-light); margin: 0; padding: 10px; color: #334155; }
+        
+        /* Login Box Responsive */
+        .login-box { background: white; padding: 30px; border-radius: 12px; max-width: 90%; margin: 50px auto; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .security-notice { font-size: 11px; color: #d63031; margin-top: 20px; font-weight: bold; text-transform: uppercase; border: 1px solid #fab1a0; padding: 10px; border-radius: 5px; background: #fff5f5; }
+        
+        /* Content Container Responsive */
+        .admin-content { display: none; max-width: 850px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 20px rgba(0,0,0,0.05); position: relative; }
+        
+        input, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; /* Evita zoom automático en iOS */ font-family: inherit; color: #000; box-sizing: border-box; }
+        
+        .btn { background: #0a1931; color: white; border: none; padding: 15px 25px; cursor: pointer; border-radius: 5px; font-weight: bold; transition: 0.3s; display: inline-block; text-decoration: none; font-size: 16px; width: 100%; margin-bottom: 10px; box-sizing: border-box; }
+        .btn:hover { background: #185adb; }
+        .btn-logout { background: #d63031; width: auto; position: absolute; top: 10px; right: 10px; padding: 8px 15px; font-size: 12px; }
+
+        .black-bar-container { background: #1e293b; color: white; padding: 10px; margin-bottom: 5px; display: flex; align-items: center; border-radius: 6px; }
+        .black-bar-input { color: white !important; border: none !important; background: transparent !important; font-weight: bold !important; padding: 0 !important; margin: 0 0 0 10px !important; width: 100% !important; cursor: pointer; font-size: 16px; }
+
+        /* TABLA RESPONSIVA */
+        .table-items { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .table-items th { background: #1e293b; color: white; padding: 12px; text-align: left; text-transform: uppercase; font-size: 13px; }
+        .table-items td { border-bottom: 1px solid #eee; padding: 10px; }
+
+        @media (max-width: 600px) {
+            .pdf-header { flex-direction: column; text-align: center; align-items: center !important; }
+            .company-info { margin-bottom: 20px; order: 2; }
+            .logo-rc { order: 1; margin-bottom: 15px; }
+            
+            .grid-header { grid-template-columns: 1fr !important; gap: 20px !important; }
+            
+            /* Convertir tabla en tarjetas para móvil */
+            .table-items thead { display: none; }
+            .table-items td { display: block; width: 100%; padding: 5px 0; border: none; }
+            .table-items tr { display: block; margin-bottom: 20px; border-bottom: 2px solid #1e293b; padding-bottom: 10px; }
+            .table-items td::before { content: attr(data-label); font-weight: bold; text-transform: uppercase; font-size: 12px; display: block; margin-bottom: 2px; color: #64748b; }
+        }
+
+        .total-section { margin-top: 30px; display: flex; flex-direction: column; align-items: flex-end; }
+        .total-box { background: #1e293b; color: white; padding: 15px 30px; min-width: 200px; display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; border-radius: 6px; width: 100%; box-sizing: border-box; }
+        
+        /* CONFIGURACIÓN DE IMPRESIÓN */
+        @media print {
+            body { background: white; padding: 0; color: #000 !important; }
+            .no-print, .btn, .add-row-btn, .btn-logout { display: none !important; }
+            .admin-content { display: block !important; box-shadow: none; padding: 0; width: 100%; }
+            .table-items thead { display: table-header-group !important; }
+            .table-items tr { display: table-row !important; border: none !important; }
+            .table-items td { display: table-cell !important; border-bottom: 1px solid #eee !important; }
+            .table-items td::before { display: none !important; }
+            input, textarea { border: none !important; background: transparent !important; color: #000 !important; opacity: 1 !important; -webkit-print-color-adjust: exact; }
+            .black-bar-container, .table-items th, .total-box { background-color: #1e293b !important; color: white !important; -webkit-print-color-adjust: exact; }
+            .black-bar-input { color: white !important; }
+            .grid-header { display: grid !important; grid-template-columns: 1fr 1fr !important; }
+        }
+
+        .pdf-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; }
+        .company-info { font-size: 14px; line-height: 1.4; color: #000; }
+        .logo-rc { width: 110px; height: auto; object-fit: contain; }
+    </style>
+</head>
+<body>
+
+    <div id="login" class="login-box">
+        <img src="logo2.png" style="width: 80px; margin-bottom: 20px;">
+        <h2>Nelson Rodriguez</h2>
+        <input type="password" id="pass" placeholder="Password">
+        <button class="btn" onclick="checkPass()">LOGIN</button>
+        <div class="security-notice">
+            <i class="fas fa-user-shield"></i><br>
+            Restricted Area: Authorized Use Only for Robert Construccion.
+        </div>
+    </div>
+
+    <div id="panel" class="admin-content">
+        <button class="btn btn-logout no-print" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i> LOGOUT
+        </button>
+
+        <div class="pdf-header">
+            <div class="company-info">
+                <strong>Robert Construccion</strong><br>
+                12 Josephine Dr.<br>
+                Beaufort, SC 29906 USA<br>
+                +1 843-227-2382<br>
+                lelo2382@yahoo.com
+            </div>
+            <img src="logo2.png" class="logo-rc" alt="Logo RC">
+        </div>
+
+        <div class="grid-header" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div>
+                <p style="color: #000; font-weight: bold; font-size: 12px; margin-bottom: 5px;">BILL TO / ADDRESS</p>
+                <textarea id="cliente" rows="4" placeholder="Client Name and Address..."></textarea>
+            </div>
+            <div>
+                <div class="black-bar-container">
+                    Estimate #: <input type="text" id="est_num" class="black-bar-input">
+                </div>
+                <div class="black-bar-container">
+                    DATE: <input type="text" id="fecha_dinamica" class="black-bar-input">
+                </div>
+            </div>
+        </div>
+
+        <table class="table-items" id="itemsTable">
+            <thead>
+                <tr>
+                    <th>ACTIVITY / DESCRIPTION</th>
+                    <th width="60">QTY</th>
+                    <th width="100">RATE</th>
+                    <th width="100">AMOUNT</th>
+                </tr>
+            </thead>
+            <tbody>
+                </tbody>
+        </table>
+        
+        <button class="btn add-row-btn no-print" onclick="addRow()" style="margin-top:20px; background: #64748b;">
+            <i class="fas fa-plus"></i> Add Item
+        </button>
+
+        <div class="total-section">
+            <div class="total-box">
+                <span>TOTAL</span>
+                <span>$<span id="grand-total">0.00</span></span>
+            </div>
+            <div class="validity-text" style="font-size: 12px; color: #666; margin-top: 10px; font-style: italic;">
+                * Estimate valid for 30 days.
+            </div>
+        </div>
+
+        <div style="margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+            <div style="border-top: 2px solid #000; padding-top: 5px; font-size: 12px; color: #000; font-weight: bold;">Accepted By (Client Signature)</div>
+            <div style="border-top: 2px solid #000; padding-top: 5px; font-size: 12px; color: #000; font-weight: bold;">Accepted Date</div>
+        </div>
+
+        <button class="btn no-print" style="background:#185adb; margin-top:40px;" onclick="generatePDF()">
+            <i class="fas fa-file-pdf"></i> GENERATE PDF
+        </button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        let datePicker;
+
+        window.onload = function() {
+            if(sessionStorage.getItem("authenticated") === "true") { showPanel(); }
+        }
+
+        function checkPass() {
+            if(document.getElementById('pass').value === "Nelson2026#") {
+                sessionStorage.setItem("authenticated", "true");
+                showPanel();
+            } else { alert("Incorrect password"); }
+        }
+
+        function showPanel() {
+            document.getElementById('login').style.display = 'none';
+            document.getElementById('panel').style.display = 'block';
+            resetForm();
+        }
+
+        function resetForm() {
+            const now = new Date();
+            const folio = now.getFullYear().toString().substr(-2) + 
+                          (now.getMonth() + 1).toString().padStart(2, '0') + 
+                          now.getDate().toString().padStart(2, '0') + 
+                          now.getHours().toString().padStart(2, '0') + 
+                          now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('est_num').value = folio;
+            document.getElementById('cliente').value = "";
+            document.getElementById('grand-total').innerText = "0.00";
+            
+            const tbody = document.getElementById("itemsTable").getElementsByTagName('tbody')[0];
+            tbody.innerHTML = "";
+            addRow();
+
+            if (datePicker) datePicker.destroy();
+            datePicker = flatpickr("#fecha_dinamica", { defaultDate: "today", dateFormat: "F j, Y" });
+        }
+
+        function generatePDF() {
+            window.print();
+            setTimeout(() => {
+                if(confirm("Do you want to clear the form for the next customer?")) { resetForm(); }
+            }, 1000);
+        }
+
+        function logout() {
+            sessionStorage.removeItem("authenticated");
+            location.reload();
+        }
+
+        function addRow() {
+            const tbody = document.getElementById("itemsTable").getElementsByTagName('tbody')[0];
+            const row = tbody.insertRow();
+            row.innerHTML = `
+                <td data-label="Description"><input type="text" placeholder="Work description..."></td>
+                <td data-label="Qty"><input type="number" value="1" oninput="calc()"></td>
+                <td data-label="Rate"><input type="number" placeholder="0.00" oninput="calc()"></td>
+                <td data-label="Amount"><input type="number" readonly class="row-total" value="0.00"></td>
+            `;
+        }
+
+        function calc() {
+            let total = 0;
+            const rows = document.getElementById("itemsTable").getElementsByTagName('tbody')[0].rows;
+            for (let i = 0; i < rows.length; i++) {
+                const q = rows[i].cells[1].getElementsByTagName('input')[0].value || 0;
+                const r = rows[i].cells[2].getElementsByTagName('input')[0].value || 0;
+                const sub = q * r;
+                rows[i].cells[3].getElementsByTagName('input')[0].value = sub.toFixed(2);
+                total += sub;
+            }
+            document.getElementById('grand-total').innerText = total.toFixed(2);
+        }
+    </script>
+</body>
+</html>
