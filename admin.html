@@ -22,7 +22,7 @@
         
         /* Contenedor del input de password para el icono */
         .password-container { position: relative; width: 100%; display: flex; align-items: center; }
-        .password-container input { padding-right: 45px; } /* Espacio para el ojo */
+        .password-container input { padding-right: 45px; } 
         .toggle-btn { position: absolute; right: 10px; background: none; border: none; cursor: pointer; color: #64748b; font-size: 18px; padding: 5px; }
 
         .security-notice { font-size: 11px; color: #d63031; margin-top: 20px; font-weight: bold; text-transform: uppercase; border: 1px solid #fab1a0; padding: 10px; border-radius: 5px; background: #fff5f5; }
@@ -34,7 +34,23 @@
         
         .btn { background: #0a1931; color: white; border: none; padding: 15px 25px; cursor: pointer; border-radius: 5px; font-weight: bold; transition: 0.3s; display: inline-block; text-decoration: none; font-size: 16px; width: 100%; margin-bottom: 10px; box-sizing: border-box; }
         .btn:hover { background: #185adb; }
-        .btn-logout { background: #d63031; width: auto; position: absolute; top: 10px; right: 10px; padding: 8px 15px; font-size: 12px; }
+
+        /* Botón Logout mejorado */
+        .btn-logout { 
+            background: #d63031; 
+            width: auto; 
+            position: absolute; 
+            top: 10px; 
+            right: 10px; 
+            padding: 8px 15px; 
+            font-size: 12px; 
+            border-radius: 5px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .btn-logout:hover { background: #b91c1c; }
 
         .black-bar-container { background: #1e293b; color: white; padding: 10px; margin-bottom: 5px; display: flex; align-items: center; border-radius: 6px; }
         .black-bar-input { color: white !important; border: none !important; background: transparent !important; font-weight: bold !important; padding: 0 !important; margin: 0 0 0 10px !important; width: 100% !important; cursor: pointer; font-size: 16px; }
@@ -98,7 +114,7 @@
     </div>
 
     <div id="panel" class="admin-content">
-        <button class="btn btn-logout no-print" onclick="logout()">
+        <button class="btn-logout no-print" onclick="logout()">
             <i class="fas fa-sign-out-alt"></i> LOGOUT
         </button>
 
@@ -140,7 +156,7 @@
             <tbody></tbody>
         </table>
         
-        <button class="btn add-row-btn no-print" onclick="addRow()" style="margin-top:20px; background: #64748b;">
+        <button class="btn add-row-btn no-print" onclick="addRow()" style="margin-top:20px; background: #64748b; width: auto; padding: 10px 20px;">
             <i class="fas fa-plus"></i> Add Item
         </button>
 
@@ -172,7 +188,6 @@
             if(sessionStorage.getItem("authenticated") === "true") { showPanel(); }
         }
 
-        // Función para mostrar/ocultar contraseña
         function togglePassword() {
             const passInput = document.getElementById("pass");
             const eyeIcon = document.getElementById("eye-icon");
@@ -226,9 +241,10 @@
             }, 1000);
         }
 
+        // FUNCIÓN LOGOUT ACTUALIZADA PARA REDIRIGIR AL HOME
         function logout() {
             sessionStorage.removeItem("authenticated");
-            location.reload();
+            location.href = 'index.html'; // Redirige a la página principal
         }
 
         function addRow() {
