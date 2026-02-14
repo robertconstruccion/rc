@@ -13,77 +13,69 @@
         :root {
             --primary-elegant: #1e293b;
             --bg-light: #f0f2f5;
+            --danger: #d63031;
         }
 
         body { font-family: 'Open Sans', sans-serif; background: var(--bg-light); margin: 0; padding: 10px; color: #334155; }
         
-        /* Login Box Responsive */
-        .login-box { background: white; padding: 30px; border-radius: 12px; max-width: 90%; margin: 50px auto; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        
-        /* Contenedor del input de password para el icono */
+        /* Login Box */
+        .login-box { background: white; padding: 30px; border-radius: 12px; max-width: 400px; margin: 50px auto; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         .password-container { position: relative; width: 100%; display: flex; align-items: center; }
         .password-container input { padding-right: 45px; } 
         .toggle-btn { position: absolute; right: 10px; background: none; border: none; cursor: pointer; color: #64748b; font-size: 18px; padding: 5px; }
 
+        /* Security Notice */
         .security-notice { font-size: 11px; color: #d63031; margin-top: 20px; font-weight: bold; text-transform: uppercase; border: 1px solid #fab1a0; padding: 10px; border-radius: 5px; background: #fff5f5; }
-        
-        /* Content Container Responsive */
+
         .admin-content { display: none; max-width: 850px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 20px rgba(0,0,0,0.05); position: relative; }
         
         input, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; font-family: inherit; color: #000; box-sizing: border-box; }
         
-        .btn { background: #0a1931; color: white; border: none; padding: 15px 25px; cursor: pointer; border-radius: 5px; font-weight: bold; transition: 0.3s; display: inline-block; text-decoration: none; font-size: 16px; width: 100%; margin-bottom: 10px; box-sizing: border-box; }
-        .btn:hover { background: #185adb; }
-
-        /* Botón Logout mejorado */
-        .btn-logout { 
-            background: #d63031; 
-            width: auto; 
-            position: absolute; 
-            top: 10px; 
-            right: 10px; 
-            padding: 8px 15px; 
-            font-size: 12px; 
-            border-radius: 5px;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
+        /* SOLUCIÓN FLECHAS (SPINNERS) */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button { 
+            -webkit-appearance: none !important; 
+            margin: 0 !important; 
         }
-        .btn-logout:hover { background: #b91c1c; }
+        input[type=number] { -moz-appearance: textfield !important; }
 
-        .black-bar-container { background: #1e293b; color: white; padding: 10px; margin-bottom: 5px; display: flex; align-items: center; border-radius: 6px; }
-        .black-bar-input { color: white !important; border: none !important; background: transparent !important; font-weight: bold !important; padding: 0 !important; margin: 0 0 0 10px !important; width: 100% !important; cursor: pointer; font-size: 16px; }
+        .action-area { display: flex; align-items: center; gap: 15px; margin-top: 40px; }
+        .btn-generate { background: #185adb; color: white; border: none; padding: 15px 25px; cursor: pointer; border-radius: 5px; font-weight: bold; transition: 0.3s; font-size: 16px; flex-grow: 1; text-transform: uppercase; }
+        .btn-generate:hover { background: #0a1931; }
+        .btn-clear-mini { background: #e2e8f0; color: #475569; border: none; width: 55px; height: 55px; border-radius: 50%; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+
+        .btn-logout { background: #d63031; width: auto; position: absolute; top: 10px; right: 10px; padding: 8px 15px; font-size: 12px; border-radius: 5px; color: white; border: none; cursor: pointer; font-weight: bold; }
+
+        /* SOLUCIÓN ESTIMATE # */
+        .black-bar-container { 
+            background: #1e293b; color: white; padding: 10px; margin-bottom: 5px; 
+            display: flex; align-items: center; border-radius: 6px; 
+            white-space: nowrap !important; overflow: hidden;
+        }
+        .black-bar-label { font-weight: bold; margin-right: 10px; flex-shrink: 0; }
+        .black-bar-input { color: white !important; border: none !important; background: transparent !important; font-weight: bold !important; padding: 0 !important; margin: 0 !important; width: 100% !important; font-size: 16px; }
 
         .table-items { width: 100%; border-collapse: collapse; margin-top: 20px; }
         .table-items th { background: #1e293b; color: white; padding: 12px; text-align: left; text-transform: uppercase; font-size: 13px; }
         .table-items td { border-bottom: 1px solid #eee; padding: 10px; }
+        .btn-delete { background: none; border: none; color: var(--danger); cursor: pointer; font-size: 18px; }
 
         @media (max-width: 600px) {
-            .pdf-header { flex-direction: column; text-align: center; align-items: center !important; }
-            .company-info { margin-bottom: 20px; order: 2; }
-            .logo-rc { order: 1; margin-bottom: 15px; }
             .grid-header { grid-template-columns: 1fr !important; gap: 20px !important; }
             .table-items thead { display: none; }
-            .table-items td { display: block; width: 100%; padding: 5px 0; border: none; }
-            .table-items tr { display: block; margin-bottom: 20px; border-bottom: 2px solid #1e293b; padding-bottom: 10px; }
-            .table-items td::before { content: attr(data-label); font-weight: bold; text-transform: uppercase; font-size: 12px; display: block; margin-bottom: 2px; color: #64748b; }
+            .table-items td { display: block; width: 100%; padding: 5px 0; border: none; text-align: right; }
+            .table-items tr { display: block; margin-bottom: 20px; border-bottom: 2px solid #1e293b; padding-bottom: 10px; position: relative; }
+            .table-items td::before { content: attr(data-label); font-weight: bold; text-transform: uppercase; font-size: 12px; float: left; color: #64748b; }
         }
 
-        .total-section { margin-top: 30px; display: flex; flex-direction: column; align-items: flex-end; }
-        .total-box { background: #1e293b; color: white; padding: 15px 30px; min-width: 200px; display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; border-radius: 6px; width: 100%; box-sizing: border-box; }
+        .total-box { background: #1e293b; color: white; padding: 15px 30px; min-width: 200px; display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; border-radius: 6px; width: 100%; box-sizing: border-box; margin-top: 30px; }
         
         @media print {
             body { background: white; padding: 0; color: #000 !important; }
-            .no-print, .btn, .add-row-btn, .btn-logout, .toggle-btn { display: none !important; }
-            .admin-content { display: block !important; box-shadow: none; padding: 0; width: 100%; }
-            .table-items thead { display: table-header-group !important; }
-            .table-items tr { display: table-row !important; border: none !important; }
-            .table-items td { display: table-cell !important; border-bottom: 1px solid #eee !important; }
-            .table-items td::before { display: none !important; }
-            input, textarea { border: none !important; background: transparent !important; color: #000 !important; opacity: 1 !important; -webkit-print-color-adjust: exact; }
+            .no-print, .btn-logout, .toggle-btn, .btn-delete, .btn-clear-mini, .add-row-btn { display: none !important; }
+            .admin-content { display: block !important; box-shadow: none; padding: 0; width: 100%; border: none !important; }
+            input, textarea { border: none !important; background: transparent !important; color: #000 !important; outline: none !important; box-shadow: none !important; -webkit-appearance: none; }
             .black-bar-container, .table-items th, .total-box { background-color: #1e293b !important; color: white !important; -webkit-print-color-adjust: exact; }
-            .black-bar-input { color: white !important; }
             .grid-header { display: grid !important; grid-template-columns: 1fr 1fr !important; }
         }
 
@@ -97,16 +89,13 @@
     <div id="login" class="login-box">
         <img src="logo2.png" style="width: 80px; margin-bottom: 20px;">
         <h2>Nelson Rodriguez</h2>
-        
         <div class="password-container">
-            <input type="password" id="pass" placeholder="Password">
+            <input type="password" id="pass" placeholder="Password" onkeypress="handleKeyPress(event)">
             <button type="button" class="toggle-btn" onclick="togglePassword()">
                 <i id="eye-icon" class="fas fa-eye"></i>
             </button>
         </div>
-
-        <button class="btn" onclick="checkPass()" style="margin-top: 10px;">LOGIN</button>
-        
+        <button class="btn-generate" onclick="checkPass()" style="margin-top: 10px; width: 100%;">LOGIN</button>
         <div class="security-notice">
             <i class="fas fa-user-shield"></i><br>
             Restricted Area: Authorized Use Only for Robert Construccion.
@@ -132,14 +121,16 @@
         <div class="grid-header" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
             <div>
                 <p style="color: #000; font-weight: bold; font-size: 12px; margin-bottom: 5px;">BILL TO / ADDRESS</p>
-                <textarea id="cliente" rows="4" placeholder="Client Name and Address..."></textarea>
+                <textarea id="cliente" rows="4" placeholder="Name&#10;Address..."></textarea>
             </div>
             <div>
                 <div class="black-bar-container">
-                    Estimate #: <input type="text" id="est_num" class="black-bar-input">
+                    <span class="black-bar-label">Estimate #:</span> 
+                    <input type="text" id="est_num" class="black-bar-input">
                 </div>
                 <div class="black-bar-container">
-                    DATE: <input type="text" id="fecha_dinamica" class="black-bar-input">
+                    <span class="black-bar-label">DATE:</span> 
+                    <input type="text" id="fecha_dinamica" class="black-bar-input">
                 </div>
             </div>
         </div>
@@ -151,23 +142,19 @@
                     <th width="60">QTY</th>
                     <th width="100">RATE</th>
                     <th width="100">AMOUNT</th>
+                    <th width="50" class="no-print"></th>
                 </tr>
             </thead>
             <tbody></tbody>
         </table>
         
-        <button class="btn add-row-btn no-print" onclick="addRow()" style="margin-top:20px; background: #64748b; width: auto; padding: 10px 20px;">
+        <button class="btn add-row-btn no-print" onclick="addRow()" style="margin-top:20px; background: #64748b; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px;">
             <i class="fas fa-plus"></i> Add Item
         </button>
 
-        <div class="total-section">
-            <div class="total-box">
-                <span>TOTAL</span>
-                <span>$<span id="grand-total">0.00</span></span>
-            </div>
-            <div class="validity-text" style="font-size: 12px; color: #666; margin-top: 10px; font-style: italic;">
-                * Estimate valid for 30 days.
-            </div>
+        <div class="total-box">
+            <span>TOTAL</span>
+            <span>$<span id="grand-total">0.00</span></span>
         </div>
 
         <div style="margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
@@ -175,9 +162,14 @@
             <div style="border-top: 2px solid #000; padding-top: 5px; font-size: 12px; color: #000; font-weight: bold;">Accepted Date</div>
         </div>
 
-        <button class="btn no-print" style="background:#185adb; margin-top:40px;" onclick="generatePDF()">
-            <i class="fas fa-file-pdf"></i> GENERATE PDF
-        </button>
+        <div class="action-area no-print">
+            <button class="btn-clear-mini" onclick="manualReset()" title="Clear form">
+                <i class="fas fa-broom"></i>
+            </button>
+            <button class="btn-generate" onclick="generatePDF()">
+                <i class="fas fa-file-pdf"></i> Generate PDF & Log
+            </button>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -188,17 +180,22 @@
             if(sessionStorage.getItem("authenticated") === "true") { showPanel(); }
         }
 
+        // Detecta la tecla Enter en el campo de contraseña
+        function handleKeyPress(e) {
+            if (e.keyCode === 13) {
+                checkPass();
+            }
+        }
+
         function togglePassword() {
             const passInput = document.getElementById("pass");
             const eyeIcon = document.getElementById("eye-icon");
             if (passInput.type === "password") {
                 passInput.type = "text";
-                eyeIcon.classList.remove("fa-eye");
-                eyeIcon.classList.add("fa-eye-slash");
+                eyeIcon.classList.replace("fa-eye", "fa-eye-slash");
             } else {
                 passInput.type = "password";
-                eyeIcon.classList.remove("fa-eye-slash");
-                eyeIcon.classList.add("fa-eye");
+                eyeIcon.classList.replace("fa-eye-slash", "fa-eye");
             }
         }
 
@@ -215,6 +212,10 @@
             resetForm();
         }
 
+        function manualReset() {
+            if(confirm("Are you sure you want to clear the form?")) { resetForm(); }
+        }
+
         function resetForm() {
             const now = new Date();
             const folio = now.getFullYear().toString().substr(-2) + 
@@ -225,36 +226,70 @@
             document.getElementById('est_num').value = folio;
             document.getElementById('cliente').value = "";
             document.getElementById('grand-total').innerText = "0.00";
-            
             const tbody = document.getElementById("itemsTable").getElementsByTagName('tbody')[0];
             tbody.innerHTML = "";
             addRow();
-
             if (datePicker) datePicker.destroy();
             datePicker = flatpickr("#fecha_dinamica", { defaultDate: "today", dateFormat: "F j, Y" });
         }
 
+        async function sendToHistoryServer() {
+            const items = [];
+            const rows = document.getElementById("itemsTable").getElementsByTagName('tbody')[0].rows;
+            
+            for (let i = 0; i < rows.length; i++) {
+                items.push({
+                    desc: rows[i].cells[0].getElementsByTagName('input')[0].value || "N/A",
+                    qty: rows[i].cells[1].getElementsByTagName('input')[0].value || 0,
+                    rate: rows[i].cells[2].getElementsByTagName('input')[0].value || 0,
+                    amount: rows[i].cells[3].getElementsByTagName('input')[0].value || 0
+                });
+            }
+
+            const lines = document.getElementById('cliente').value.split('\n');
+            const historyData = {
+                estimate: document.getElementById('est_num').value,
+                date: document.getElementById('fecha_dinamica').value,
+                client_name: lines[0] || "No Name",
+                address: lines.slice(1).join(", ") || "No Address Provided",
+                items: items,
+                total: document.getElementById('grand-total').innerText
+            };
+
+            try {
+                await fetch('http://54.84.170.85/rc/Bitacora/save_history.php', {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(historyData)
+                });
+                console.log("Full history sent to CSV server.");
+            } catch (error) {
+                console.error("Connection error:", error);
+            }
+        }
+
         function generatePDF() {
+            sendToHistoryServer();
             window.print();
             setTimeout(() => {
                 if(confirm("Do you want to clear the form for the next customer?")) { resetForm(); }
             }, 1000);
         }
 
-        // FUNCIÓN LOGOUT ACTUALIZADA PARA REDIRIGIR AL HOME
-        function logout() {
-            sessionStorage.removeItem("authenticated");
-            location.href = 'index.html'; // Redirige a la página principal
-        }
+        function logout() { sessionStorage.removeItem("authenticated"); location.reload(); }
 
         function addRow() {
             const tbody = document.getElementById("itemsTable").getElementsByTagName('tbody')[0];
             const row = tbody.insertRow();
             row.innerHTML = `
-                <td data-label="Description"><input type="text" placeholder="Work description..."></td>
+                <td data-label="Description"><input type="text" placeholder="..."></td>
                 <td data-label="Qty"><input type="number" value="1" oninput="calc()"></td>
                 <td data-label="Rate"><input type="number" placeholder="0.00" oninput="calc()"></td>
-                <td data-label="Amount"><input type="number" readonly class="row-total" value="0.00"></td>
+                <td data-label="Amount"><input type="number" readonly value="0.00"></td>
+                <td class="no-print" style="text-align: center;">
+                    <button class="btn-delete" onclick="this.closest('tr').remove(); calc();"><i class="fas fa-trash-can"></i></button>
+                </td>
             `;
         }
 
