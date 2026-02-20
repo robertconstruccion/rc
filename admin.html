@@ -5,123 +5,141 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Quote Generator | Robert Construccion</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
 
     <style>
         :root {
-            --primary-elegant: #1e293b;
-            --bg-light: #f0f2f5;
+            --azul-oscuro: #0a1931;
+            --azul-vibrante: #185adb;
+            --azul-claro: #00a8ff;
+            --azul-fondo: #f0f4f8;
             --danger: #d63031;
+            --gradient: linear-gradient(135deg, #0a1931 0%, #185adb 100%);
         }
 
-        body { font-family: 'Open Sans', sans-serif; background: var(--bg-light); margin: 0; padding: 10px; color: #334155; }
+        body { font-family: 'Open Sans', sans-serif; background: var(--azul-fondo); margin: 0; padding: 10px; color: #1e293b; }
         
-        /* Login Box */
-        .login-box { background: white; padding: 30px; border-radius: 12px; max-width: 400px; margin: 50px auto; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        /* LOGIN GLASSMORPHISM */
+        .login-box { 
+            background: rgba(255, 255, 255, 0.9); 
+            backdrop-filter: blur(10px);
+            padding: 40px; border-radius: 25px; max-width: 400px; 
+            margin: 80px auto; text-align: center; 
+            box-shadow: 0 20px 40px rgba(10, 25, 49, 0.1); 
+            border: 1px solid white;
+        }
         .password-container { position: relative; width: 100%; display: flex; align-items: center; }
         .password-container input { padding-right: 45px; } 
-        .toggle-btn { position: absolute; right: 10px; background: none; border: none; cursor: pointer; color: #64748b; font-size: 18px; padding: 5px; }
+        .toggle-btn { position: absolute; right: 10px; background: none; border: none; cursor: pointer; color: var(--azul-vibrante); font-size: 18px; padding: 5px; }
 
-        /* Security Notice */
-        .security-notice { font-size: 11px; color: #d63031; margin-top: 20px; font-weight: bold; text-transform: uppercase; border: 1px solid #fab1a0; padding: 10px; border-radius: 5px; background: #fff5f5; }
+        .security-notice { font-size: 11px; color: var(--azul-oscuro); margin-top: 15px; font-weight: bold; text-transform: uppercase; opacity: 0.7; }
 
-        .admin-content { display: none; max-width: 850px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 20px rgba(0,0,0,0.05); position: relative; }
-        
-        input, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; font-family: inherit; color: #000; box-sizing: border-box; }
-        
-        /* SOLUCIÓN FLECHAS (SPINNERS) */
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button { 
-            -webkit-appearance: none !important; 
-            margin: 0 !important; 
+        /* PANEL CONTENT */
+        .admin-content { 
+            display: none; max-width: 900px; margin: 20px auto; 
+            background: white; padding: 40px; border-radius: 30px; 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.05); position: relative; 
         }
-        input[type=number] { -moz-appearance: textfield !important; }
+        
+        input, textarea { 
+            width: 100%; padding: 14px; margin: 8px 0; border: 2px solid #eee; 
+            border-radius: 12px; font-size: 16px; font-family: inherit; 
+            color: #000; box-sizing: border-box; transition: 0.3s;
+        }
+        input:focus, textarea:focus { border-color: var(--azul-claro); outline: none; background: #fff; }
+        
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type=number] { -moz-appearance: textfield; }
 
         .action-area { display: flex; align-items: center; gap: 15px; margin-top: 40px; }
-        .btn-generate { background: #185adb; color: white; border: none; padding: 15px 25px; cursor: pointer; border-radius: 5px; font-weight: bold; transition: 0.3s; font-size: 16px; flex-grow: 1; text-transform: uppercase; }
-        .btn-generate:hover { background: #0a1931; }
-        .btn-clear-mini { background: #e2e8f0; color: #475569; border: none; width: 55px; height: 55px; border-radius: 50%; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .btn-generate { 
+            background: var(--gradient); color: white; border: none; 
+            padding: 18px 25px; cursor: pointer; border-radius: 15px; 
+            font-weight: bold; transition: 0.3s; font-size: 16px; flex-grow: 1; 
+            text-transform: uppercase; box-shadow: 0 10px 20px rgba(24, 90, 219, 0.2);
+        }
+        .btn-generate:hover { transform: translateY(-2px); box-shadow: 0 15px 25px rgba(24, 90, 219, 0.3); }
 
-        .btn-logout { background: #d63031; width: auto; position: absolute; top: 10px; right: 10px; padding: 8px 15px; font-size: 12px; border-radius: 5px; color: white; border: none; cursor: pointer; font-weight: bold; }
+        .btn-logout { background: #eee; color: #666; border: none; padding: 8px 15px; border-radius: 10px; cursor: pointer; font-size: 12px; position: absolute; top: 20px; right: 20px; transition: 0.3s; }
 
-        /* SOLUCIÓN ESTIMATE # */
         .black-bar-container { 
-            background: #1e293b; color: white; padding: 10px; margin-bottom: 5px; 
-            display: flex; align-items: center; border-radius: 6px; 
-            white-space: nowrap !important; overflow: hidden;
+            background: var(--azul-fondo); color: var(--azul-oscuro); padding: 12px 18px; 
+            margin-bottom: 8px; display: flex; align-items: center; border-radius: 12px; 
+            white-space: nowrap !important; overflow: hidden; border: 1px solid rgba(10, 25, 49, 0.1);
         }
-        .black-bar-label { font-weight: bold; margin-right: 10px; flex-shrink: 0; }
-        .black-bar-input { color: white !important; border: none !important; background: transparent !important; font-weight: bold !important; padding: 0 !important; margin: 0 !important; width: 100% !important; font-size: 16px; }
+        .black-bar-label { font-weight: 800; margin-right: 10px; flex-shrink: 0; font-size: 13px; text-transform: uppercase; }
+        .black-bar-input { color: var(--azul-vibrante) !important; border: none !important; background: transparent !important; font-weight: bold !important; padding: 0 !important; margin: 0 !important; width: 100% !important; font-size: 16px; }
 
-        .table-items { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        .table-items th { background: #1e293b; color: white; padding: 12px; text-align: left; text-transform: uppercase; font-size: 13px; }
-        .table-items td { border-bottom: 1px solid #eee; padding: 10px; }
-        .btn-delete { background: none; border: none; color: var(--danger); cursor: pointer; font-size: 18px; }
+        .table-items { width: 100%; border-collapse: separate; border-spacing: 0 10px; margin-top: 20px; }
+        .table-items th { color: #888; padding: 12px; text-align: left; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
+        .table-items td { background: #fafafa; padding: 10px; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; }
+        .table-items td:first-child { border-left: 1px solid #f0f0f0; border-radius: 12px 0 0 12px; }
+        .table-items td:last-child { border-right: 1px solid #f0f0f0; border-radius: 0 12px 12px 0; }
 
-        @media (max-width: 600px) {
-            .grid-header { grid-template-columns: 1fr !important; gap: 20px !important; }
-            .table-items thead { display: none; }
-            .table-items td { display: block; width: 100%; padding: 5px 0; border: none; text-align: right; }
-            .table-items tr { display: block; margin-bottom: 20px; border-bottom: 2px solid #1e293b; padding-bottom: 10px; position: relative; }
-            .table-items td::before { content: attr(data-label); font-weight: bold; text-transform: uppercase; font-size: 12px; float: left; color: #64748b; }
+        .btn-delete { background: none; border: none; color: #ccc; cursor: pointer; font-size: 18px; transition: 0.3s; }
+        .btn-delete:hover { color: var(--danger); }
+
+        .total-box { 
+            background: var(--azul-oscuro); color: white; padding: 25px 35px; 
+            display: flex; justify-content: space-between; font-weight: bold; 
+            font-size: 1.4rem; border-radius: 20px; margin-top: 30px;
+            box-shadow: 0 15px 30px rgba(10, 25, 49, 0.2);
         }
-
-        .total-box { background: #1e293b; color: white; padding: 15px 30px; min-width: 200px; display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; border-radius: 6px; width: 100%; box-sizing: border-box; margin-top: 30px; }
         
         @media print {
-            body { background: white; padding: 0; color: #000 !important; }
-            .no-print, .btn-logout, .toggle-btn, .btn-delete, .btn-clear-mini, .add-row-btn { display: none !important; }
+            body { background: white; padding: 0; }
+            .no-print, .btn-logout, .btn-delete, .add-row-btn { display: none !important; }
             .admin-content { display: block !important; box-shadow: none; padding: 0; width: 100%; border: none !important; }
-            input, textarea { border: none !important; background: transparent !important; color: #000 !important; outline: none !important; box-shadow: none !important; -webkit-appearance: none; }
-            .black-bar-container, .table-items th, .total-box { background-color: #1e293b !important; color: white !important; -webkit-print-color-adjust: exact; }
+            input, textarea { border: none !important; background: transparent !important; }
+            .black-bar-container { border: 1px solid #eee !important; background: #f9f9f9 !important; }
+            .total-box { background: #0a1931 !important; color: white !important; -webkit-print-color-adjust: exact; }
+            .table-items td { background: white !important; border-bottom: 1px solid #eee !important; }
             .grid-header { display: grid !important; grid-template-columns: 1fr 1fr !important; }
         }
 
-        .pdf-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; }
-        .company-info { font-size: 14px; line-height: 1.4; color: #000; }
-        .logo-rc { width: 110px; height: auto; object-fit: contain; }
+        .pdf-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+        .logo-rc { width: 110px; height: auto; border-radius: 50%; border: 3px solid var(--azul-fondo); }
     </style>
 </head>
 <body>
 
     <div id="login" class="login-box">
-        <img src="logo2.png" style="width: 80px; margin-bottom: 20px;">
-        <h2>Nelson Rodriguez</h2>
+        <img src="logo2.png" style="width: 100px; margin-bottom: 20px;">
+        <h2 style="color: var(--azul-oscuro);">Robert Construccion</h2>
+        <p style="color: #888; font-size: 14px; margin-bottom: 25px;">Management Portal</p>
         <div class="password-container">
-            <input type="password" id="pass" placeholder="Password" onkeypress="handleKeyPress(event)">
+            <input type="password" id="pass" placeholder="Enter Password" onkeypress="handleKeyPress(event)">
             <button type="button" class="toggle-btn" onclick="togglePassword()">
                 <i id="eye-icon" class="fas fa-eye"></i>
             </button>
         </div>
-        <button class="btn-generate" onclick="checkPass()" style="margin-top: 10px; width: 100%;">LOGIN</button>
+        <button class="btn-generate" onclick="checkPass()" style="margin-top: 15px; width: 100%;">ACCESS SYSTEM</button>
         <div class="security-notice">
-            <i class="fas fa-user-shield"></i><br>
-            Restricted Area: Authorized Use Only for Robert Construccion.
+            <i class="fas fa-lock"></i> Secured Access Only
         </div>
     </div>
 
     <div id="panel" class="admin-content">
-        <button class="btn-logout no-print" onclick="logout()">
-            <i class="fas fa-sign-out-alt"></i> LOGOUT
-        </button>
+        <button class="btn-logout no-print" onclick="logout()"><i class="fas fa-sign-out-alt"></i> LOGOUT</button>
 
         <div class="pdf-header">
-            <div class="company-info">
-                <strong>Robert Construccion</strong><br>
-                12 Josephine Dr.<br>
-                Beaufort, SC 29906 USA<br>
-                +1 843-227-2382<br>
-                lelo2382@yahoo.com
+            <div>
+                <h1 style="color: var(--azul-vibrante); margin: 0; font-size: 1.8rem;">Robert Construccion</h1>
+                <p style="font-size: 14px; line-height: 1.4; color: #000; margin-top: 5px;">
+                    12 Josephine Dr.<br>
+                    Beaufort, SC 29906 USA<br>
+                    +1 843-227-2382<br>
+                    lelo2382@yahoo.com
+                </p>
             </div>
-            <img src="logo2.png" class="logo-rc" alt="Logo RC">
+            <img src="logo2.png" class="logo-rc" alt="Logo">
         </div>
 
-        <div class="grid-header" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div class="grid-header" style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
             <div>
-                <p style="color: #000; font-weight: bold; font-size: 12px; margin-bottom: 5px;">BILL TO / ADDRESS</p>
-                <textarea id="cliente" rows="4" placeholder="Name&#10;Address..."></textarea>
+                <p style="color: var(--azul-oscuro); font-weight: 800; font-size: 11px; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">BILL TO / ADDRESS</p>
+                <textarea id="cliente" rows="4" placeholder="Client Full Name&#10;Job Site Address..."></textarea>
             </div>
             <div>
                 <div class="black-bar-container">
@@ -139,35 +157,42 @@
             <thead>
                 <tr>
                     <th>ACTIVITY / DESCRIPTION</th>
-                    <th width="60">QTY</th>
-                    <th width="100">RATE</th>
-                    <th width="100">AMOUNT</th>
-                    <th width="50" class="no-print"></th>
+                    <th width="70">QTY</th>
+                    <th width="110">RATE</th>
+                    <th width="110">AMOUNT</th>
+                    <th width="40" class="no-print"></th>
                 </tr>
             </thead>
             <tbody></tbody>
         </table>
         
-        <button class="btn add-row-btn no-print" onclick="addRow()" style="margin-top:20px; background: #64748b; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px;">
-            <i class="fas fa-plus"></i> Add Item
+        <button class="btn no-print add-row-btn" onclick="addRow()" style="margin-top:10px; background: none; border: 2px dashed var(--azul-claro); color: var(--azul-vibrante); padding: 12px; width: 100%; border-radius: 12px; cursor: pointer; font-weight: bold;">
+            <i class="fas fa-plus-circle"></i> Add New Line Item
         </button>
 
         <div class="total-box">
-            <span>TOTAL</span>
+            <span>TOTAL AMOUNT</span>
             <span>$<span id="grand-total">0.00</span></span>
         </div>
 
-        <div style="margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
-            <div style="border-top: 2px solid #000; padding-top: 5px; font-size: 12px; color: #000; font-weight: bold;">Accepted By (Client Signature)</div>
-            <div style="border-top: 2px solid #000; padding-top: 5px; font-size: 12px; color: #000; font-weight: bold;">Accepted Date</div>
+        <div style="margin-top: 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+            <div style="border-top: 1px solid #ddd; padding-top: 10px; font-size: 11px; color: #888; font-weight: bold; text-transform: uppercase;">Accepted By (Client Signature)</div>
+            <div style="border-top: 1px solid #ddd; padding-top: 10px; font-size: 11px; color: #888; font-weight: bold; text-transform: uppercase;">Accepted Date</div>
+        </div>
+
+        <div class="no-print" style="margin-top: 50px; border-top: 2px solid var(--azul-fondo); padding-top: 30px;">
+            <h3 style="color: var(--azul-oscuro); margin-bottom: 20px;"><i class="fas fa-history"></i> Recent Estimates</h3>
+            <div id="history-container" style="max-height: 400px; overflow-y: auto; background: #fafafa; border-radius: 15px; padding: 15px; border: 1px solid #eee;">
+                <p style="text-align: center; color: #888;">Loading history...</p>
+            </div>
         </div>
 
         <div class="action-area no-print">
             <button class="btn-clear-mini" onclick="manualReset()" title="Clear form">
-                <i class="fas fa-broom"></i>
+                <i class="fas fa-trash-alt"></i>
             </button>
             <button class="btn-generate" onclick="generatePDF()">
-                <i class="fas fa-file-pdf"></i> Generate PDF & Log
+                <i class="fas fa-file-invoice-dollar"></i> GENERATE PDF & LOG
             </button>
         </div>
     </div>
@@ -177,15 +202,12 @@
         let datePicker;
 
         window.onload = function() {
-            if(sessionStorage.getItem("authenticated") === "true") { showPanel(); }
-        }
-
-        // Detecta la tecla Enter en el campo de contraseña
-        function handleKeyPress(e) {
-            if (e.keyCode === 13) {
-                checkPass();
+            if(sessionStorage.getItem("authenticated") === "true") { 
+                showPanel(); 
             }
         }
+
+        function handleKeyPress(e) { if (e.keyCode === 13) { checkPass(); } }
 
         function togglePassword() {
             const passInput = document.getElementById("pass");
@@ -210,52 +232,67 @@
             document.getElementById('login').style.display = 'none';
             document.getElementById('panel').style.display = 'block';
             resetForm();
+            loadHistory(); // CARGA BITÁCORA AL ENTRAR
         }
 
-        function manualReset() {
-            if(confirm("Are you sure you want to clear the form?")) { resetForm(); }
-        }
+        function manualReset() { if(confirm("Are you sure you want to clear the form?")) { resetForm(); } }
 
         function resetForm() {
             const now = new Date();
-            const folio = now.getFullYear().toString().substr(-2) + 
-                          (now.getMonth() + 1).toString().padStart(2, '0') + 
-                          now.getDate().toString().padStart(2, '0') + 
-                          now.getHours().toString().padStart(2, '0') + 
-                          now.getMinutes().toString().padStart(2, '0');
+            const folio = "RC-" + now.getFullYear().toString().substr(-2) + (now.getMonth() + 1).toString().padStart(2, '0') + now.getDate().toString().padStart(2, '0') + now.getHours().toString().padStart(2, '0') + now.getMinutes().toString().padStart(2, '0');
             document.getElementById('est_num').value = folio;
             document.getElementById('cliente').value = "";
             document.getElementById('grand-total').innerText = "0.00";
-            const tbody = document.getElementById("itemsTable").getElementsByTagName('tbody')[0];
-            tbody.innerHTML = "";
+            document.getElementById("itemsTable").getElementsByTagName('tbody')[0].innerHTML = "";
             addRow();
             if (datePicker) datePicker.destroy();
             datePicker = flatpickr("#fecha_dinamica", { defaultDate: "today", dateFormat: "F j, Y" });
         }
 
+        // CARGA BITÁCORA DESDE LA CARPETA RC
+        async function loadHistory() {
+            const container = document.getElementById('history-container');
+            try {
+                const response = await fetch('http://54.84.170.85/rc/Bitacora/get_history.php');
+                const data = await response.json();
+                if (data.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; color: #888;">No records found.</p>';
+                    return;
+                }
+                let html = '<table style="width:100%; font-size: 13px; border-collapse: collapse;">';
+                html += '<tr style="text-align:left; color:#888; border-bottom:1px solid #eee;"><th style="padding:10px;">ID</th><th>Client</th><th>Date</th><th style="text-align:right; padding:10px;">Amount</th></tr>';
+                data.forEach(row => {
+                    html += `<tr style="border-bottom: 1px solid #f0f0f0;">
+                        <td style="padding:10px; font-weight:bold; color:var(--azul-vibrante);">${row.estimate}</td>
+                        <td>${row.name}</td>
+                        <td>${row.date}</td>
+                        <td style="text-align:right; padding:10px; font-weight:bold;">$${row.total}</td>
+                    </tr>`;
+                });
+                container.innerHTML = html + '</table>';
+            } catch (error) { container.innerHTML = '<p style="text-align: center; color: var(--danger);">Connection error with database.</p>'; }
+        }
+
+        // GUARDA EN BITÁCORA DE LA CARPETA RC
         async function sendToHistoryServer() {
             const items = [];
             const rows = document.getElementById("itemsTable").getElementsByTagName('tbody')[0].rows;
-            
             for (let i = 0; i < rows.length; i++) {
                 items.push({
                     desc: rows[i].cells[0].getElementsByTagName('input')[0].value || "N/A",
                     qty: rows[i].cells[1].getElementsByTagName('input')[0].value || 0,
-                    rate: rows[i].cells[2].getElementsByTagName('input')[0].value || 0,
-                    amount: rows[i].cells[3].getElementsByTagName('input')[0].value || 0
+                    rate: rows[i].cells[2].getElementsByTagName('input')[0].value || 0
                 });
             }
-
             const lines = document.getElementById('cliente').value.split('\n');
             const historyData = {
                 estimate: document.getElementById('est_num').value,
                 date: document.getElementById('fecha_dinamica').value,
                 client_name: lines[0] || "No Name",
-                address: lines.slice(1).join(", ") || "No Address Provided",
+                address: lines.slice(1).join(", ") || "No Address",
                 items: items,
                 total: document.getElementById('grand-total').innerText
             };
-
             try {
                 await fetch('http://54.84.170.85/rc/Bitacora/save_history.php', {
                     method: 'POST',
@@ -263,18 +300,16 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(historyData)
                 });
-                console.log("Full history sent to CSV server.");
-            } catch (error) {
-                console.error("Connection error:", error);
-            }
+            } catch (error) { console.error("Error saving history:", error); }
         }
 
         function generatePDF() {
             sendToHistoryServer();
             window.print();
-            setTimeout(() => {
-                if(confirm("Do you want to clear the form for the next customer?")) { resetForm(); }
-            }, 1000);
+            setTimeout(() => { 
+                loadHistory(); 
+                if(confirm("Clear form for next customer?")) { resetForm(); } 
+            }, 1500);
         }
 
         function logout() { sessionStorage.removeItem("authenticated"); location.reload(); }
@@ -283,13 +318,11 @@
             const tbody = document.getElementById("itemsTable").getElementsByTagName('tbody')[0];
             const row = tbody.insertRow();
             row.innerHTML = `
-                <td data-label="Description"><input type="text" placeholder="..."></td>
-                <td data-label="Qty"><input type="number" value="1" oninput="calc()"></td>
-                <td data-label="Rate"><input type="number" placeholder="0.00" oninput="calc()"></td>
-                <td data-label="Amount"><input type="number" readonly value="0.00"></td>
-                <td class="no-print" style="text-align: center;">
-                    <button class="btn-delete" onclick="this.closest('tr').remove(); calc();"><i class="fas fa-trash-can"></i></button>
-                </td>
+                <td><input type="text" placeholder="Service description..."></td>
+                <td><input type="number" value="1" oninput="calc()"></td>
+                <td><input type="number" placeholder="0.00" oninput="calc()"></td>
+                <td><input type="number" readonly value="0.00"></td>
+                <td class="no-print"><button class="btn-delete" onclick="this.closest('tr').remove(); calc();"><i class="fas fa-times-circle"></i></button></td>
             `;
         }
 
