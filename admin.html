@@ -50,15 +50,40 @@
         }
         input:focus, textarea:focus { border-color: var(--azul-claro); outline: none; background: #fff; }
 
-        /* TABLA DE ÍTEMS AJUSTADA */
-        .table-items { width: 100%; border-collapse: separate; border-spacing: 0 10px; margin-top: 20px; table-layout: fixed; }
-        .table-items th { color: #888; padding: 12px; text-align: left; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
-        .table-items td { background: #fafafa; padding: 12px; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
-        .table-items td:first-child { border-left: 1px solid #f0f0f0; border-radius: 15px 0 0 15px; width: 50%; }
-        .table-items td:last-child { border-right: 1px solid #f0f0f0; border-radius: 0 15px 15px 0; width: 45px; text-align: center; }
+        /* TABLA DE ÍTEMS CON BORDE ÚNICO REDONDEADO */
+        .table-items { 
+            width: 100%; 
+            border-collapse: separate; 
+            border-spacing: 0; 
+            margin-top: 20px; 
+            table-layout: fixed;
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .table-items th { 
+            color: #888; 
+            padding: 15px 12px; 
+            text-align: left; 
+            text-transform: uppercase; 
+            font-size: 11px; 
+            letter-spacing: 1px;
+            background: #fafafa;
+            border-bottom: 3px solid var(--azul-oscuro); /* Línea gruesa bajo títulos */
+        }
+        .table-items td { 
+            background: #fff; 
+            padding: 12px; 
+            border-bottom: 1px solid #f0f0f0; 
+            vertical-align: middle; 
+        }
+        .table-items tr:last-child td { border-bottom: none; }
+        .table-items td:first-child { width: 50%; }
+        .table-items td:last-child { width: 45px; text-align: center; }
 
         /* MODO CELULAR PANTALLA: ÍTEM VERTICAL */
         @media screen and (max-width: 600px) {
+            .table-items { border: none; border-radius: 0; overflow: visible; }
             .table-items, .table-items thead, .table-items tbody, .table-items th, .table-items td, .table-items tr { display: block; width: 100%; }
             .table-items thead { display: none; }
             .table-items tr { margin-bottom: 20px; border: 1px solid #eee; border-radius: 20px; padding: 15px; background: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.02); }
@@ -79,6 +104,19 @@
             box-shadow: 0 15px 30px rgba(10, 25, 49, 0.2);
         }
 
+        /* ESTILO PROFESIONAL TERMS & CONDITIONS */
+        .validity-message {
+            display: none;
+            margin-top: 25px;
+            padding: 15px;
+            background: #f8fafc;
+            border-left: 5px solid var(--azul-oscuro);
+            border-radius: 8px;
+            font-size: 12px;
+            color: #334155;
+            line-height: 1.6;
+        }
+
         .action-area { display: flex; align-items: center; gap: 15px; margin-top: 40px; }
         .btn-generate { 
             background: var(--gradient); color: white; border: none; 
@@ -91,7 +129,7 @@
         .btn-clear-mini { background: #eee; border: none; padding: 18px; border-radius: 15px; cursor: pointer; color: #666; transition: 0.3s; }
         .btn-clear-mini:hover { background: #ffebeb; color: var(--danger); }
 
-        /* BOTON LOGOUT DANGER */
+        /* BOTON LOGOUT DANGER (Cambiado a Rojo) */
         .btn-logout { background: var(--danger); color: white; border: none; padding: 8px 15px; border-radius: 10px; cursor: pointer; font-size: 12px; position: absolute; top: 20px; right: 20px; transition: 0.3s; font-weight: bold; }
         .btn-logout:hover { filter: brightness(1.2); }
 
@@ -103,72 +141,40 @@
         .black-bar-label { font-weight: 800; margin-right: 10px; flex-shrink: 0; font-size: 13px; text-transform: uppercase; }
         .black-bar-input { color: var(--azul-vibrante) !important; border: none !important; background: transparent !important; font-weight: bold !important; padding: 0 !important; margin: 0 !important; width: 100% !important; font-size: 16px; }
 
-        /* --- CONFIGURACIÓN DE IMPRESIÓN MAESTRA (SIEMPRE HORIZONTAL) --- */
+        /* --- CONFIGURACIÓN DE IMPRESIÓN MAESTRA --- */
         @media print {
             @page { size: letter; margin: 0; }
             body { background: white !important; padding: 0; margin: 0; width: 210mm; }
             .no-print, .btn-logout, .btn-delete, .add-row-btn, .security-notice, .action-area { display: none !important; }
             .admin-content { display: block !important; box-shadow: none !important; padding: 15mm !important; width: 100%; border: none !important; margin: 0 !important; }
             
-            /* RESET TOTAL PARA IMPRESIÓN: FUERZA TABLA HORIZONTAL CON BORDE ÚNICO */
             .table-items { 
                 display: table !important; 
                 width: 100% !important; 
                 table-layout: auto !important; 
-                border-collapse: collapse !important; 
+                border-collapse: separate !important; 
                 border-spacing: 0 !important; 
-                margin-top: 20px !important;
+                border: 1px solid #ddd !important;
+                border-radius: 15px !important;
+                overflow: hidden !important;
             }
             .table-items thead { display: table-header-group !important; }
-            .table-items tbody { display: table-row-group !important; }
             .table-items tr { display: table-row !important; background: transparent !important; }
-            
-            /* Línea gruesa decorativa bajo encabezados */
-            .table-items th { 
-                display: table-cell !important; 
-                border-bottom: 3px solid var(--azul-oscuro) !important; 
-                padding: 12px 10px !important; 
-                font-weight: 800 !important;
-                color: #000 !important;
-            }
-            
-            /* Línea divisoria suave entre items */
-            .table-items td { 
-                display: table-cell !important; 
-                background: white !important; 
-                border-bottom: 1px solid #eee !important; 
-                padding: 10px 8px !important;
-                border-radius: 0 !important;
-                border-left: none !important;
-                border-right: none !important;
-            }
+            .table-items td { display: table-cell !important; background: white !important; border-bottom: 1px solid #eee !important; padding: 10px 8px !important; }
+            .table-items th { display: table-cell !important; border-bottom: 3px solid var(--azul-oscuro) !important; padding: 12px 10px !important; background: #f9f9f9 !important; color: #000 !important; font-weight: bold !important; }
             .table-items td::before { display: none !important; }
+            
+            .validity-message { display: block !important; -webkit-print-color-adjust: exact; }
             
             input, textarea { border: none !important; background: transparent !important; padding: 2px !important; font-size: 12pt !important; }
             .black-bar-container { border: 1px solid #eee !important; background: #f9f9f9 !important; -webkit-print-color-adjust: exact; }
-            .total-box { background: #0a1931 !important; color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; margin-top: 50px !important; }
+            .total-box { background: #0a1931 !important; color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; margin-top: 50px !important; border-radius: 15px !important; }
             .grid-header { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 30px !important; }
             .logo-rc { max-width: 100px !important; -webkit-print-color-adjust: exact; }
-
-            /* MENSAJE DE VALIDEZ USA */
-            .validity-message {
-                display: block !important;
-                margin-top: 30px;
-                padding: 15px;
-                background: #f8fafc !important;
-                border-left: 5px solid var(--azul-oscuro) !important;
-                font-size: 11px;
-                color: #334155 !important;
-                line-height: 1.6;
-                -webkit-print-color-adjust: exact;
-            }
         }
 
         .pdf-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
         .logo-rc { width: 110px; height: auto; border-radius: 50%; border: 3px solid var(--azul-fondo); transition: 0.3s; }
-        
-        /* Mensaje de validez oculto en pantalla, visible solo en PDF */
-        .validity-message { display: none; }
     </style>
 </head>
 <body>
@@ -250,7 +256,7 @@
 
         <div class="no-print" style="margin-top: 50px; border-top: 2px solid var(--azul-fondo); padding-top: 30px;">
             <h3 style="color: var(--azul-oscuro); margin-bottom: 20px;"><i class="fas fa-history"></i> Recent Estimates</h3>
-            <div id="history-container" style="max-height: 250px; overflow-y: auto; background: #fafafa; border-radius: 15px; padding: 15px; border: 1px solid #eee;">
+            <div id="history-container" style="max-height: 300px; overflow-y: auto; background: #fafafa; border-radius: 15px; padding: 15px; border: 1px solid #eee;">
                 <p style="text-align: center; color: #888;">Loading history...</p>
             </div>
         </div>
@@ -299,19 +305,31 @@
             addRow();
             datePicker = flatpickr("#fecha_dinamica", { defaultDate: "today", dateFormat: "F j, Y" });
         }
+        
         async function loadHistory() {
             const container = document.getElementById('history-container');
             try {
                 const response = await fetch('http://54.84.170.85/rc/Bitacora/get_history.php');
                 const data = await response.json();
                 if (data.length === 0) { container.innerHTML = '<p>No records found.</p>'; return; }
-                let html = '<table style="width:100%; font-size: 13px;">';
+                
+                // TABLA DE HISTORIAL CON TÍTULOS Y FECHA
+                let html = '<table style="width:100%; font-size: 13px; border-collapse: collapse;">';
+                html += '<tr style="border-bottom: 2px solid #eee; text-align: left; color: #888;">';
+                html += '<th style="padding: 10px;">ID</th><th>Client</th><th>Date</th><th style="text-align: right; padding-right: 10px;">Amount</th></tr>';
+                
                 data.forEach(row => {
-                    html += `<tr><td style="padding:10px; font-weight:bold; color:var(--azul-vibrante);">${row.estimate}</td><td>${row.name}</td><td style="text-align:right;">$${row.total}</td></tr>`;
+                    html += `<tr style="border-bottom: 1px solid #f0f0f0;">
+                        <td style="padding:10px; font-weight:bold; color:var(--azul-vibrante);">${row.estimate}</td>
+                        <td>${row.name}</td>
+                        <td>${row.date}</td>
+                        <td style="text-align:right; padding-right: 10px; font-weight:bold;">$${row.total}</td>
+                    </tr>`;
                 });
                 container.innerHTML = html + '</table>';
             } catch (e) { container.innerHTML = '<p>Error loading history.</p>'; }
         }
+        
         async function sendToHistoryServer() {
             const data = {
                 estimate: document.getElementById('est_num').value,
@@ -321,12 +339,15 @@
             };
             try { await fetch('http://54.84.170.85/rc/Bitacora/save_history.php', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }); } catch (e) { }
         }
+        
         function generatePDF() {
             sendToHistoryServer();
             window.print();
             setTimeout(() => { loadHistory(); if(confirm("Clear form?")) resetForm(); }, 1500);
         }
+        
         function logout() { sessionStorage.removeItem("authenticated"); location.reload(); }
+        
         function addRow() {
             const tbody = document.getElementById("itemsTable").getElementsByTagName('tbody')[0];
             const row = tbody.insertRow();
@@ -338,6 +359,7 @@
                 <td class="no-print"><button class="btn-delete" onclick="this.closest('tr').remove(); calc();"><i class="fas fa-times-circle"></i></button></td>
             `;
         }
+        
         function calc() {
             let total = 0;
             const rows = document.getElementById("itemsTable").getElementsByTagName('tbody')[0].rows;
