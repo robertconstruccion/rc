@@ -18,16 +18,17 @@
             --gradient: linear-gradient(135deg, #0a1931 0%, #185adb 100%);
         }
 
-        body { font-family: 'Open Sans', sans-serif; background: var(--azul-fondo); margin: 0; padding: 10px; color: #1e293b; }
+        body { font-family: 'Open Sans', sans-serif; background: var(--azul-fondo); margin: 0; padding: 10px; color: #1e293b; overflow-x: hidden; }
         
-        /* LOGIN GLASSMORPHISM */
+        /* LOGIN GLASSMORPHISM RESTAURADO */
         .login-box { 
-            background: rgba(255, 255, 255, 0.9); 
-            backdrop-filter: blur(10px);
-            padding: 40px; border-radius: 25px; max-width: 400px; 
+            background: rgba(255, 255, 255, 0.8); 
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 40px; border-radius: 30px; max-width: 400px; 
             margin: 80px auto; text-align: center; 
-            box-shadow: 0 20px 40px rgba(10, 25, 49, 0.1); 
-            border: 1px solid white;
+            box-shadow: 0 20px 50px rgba(10, 25, 49, 0.15); 
+            border: 1px solid rgba(255, 255, 255, 0.5);
         }
         .password-container { position: relative; width: 100%; display: flex; align-items: center; }
         .password-container input { padding-right: 45px; } 
@@ -48,9 +49,35 @@
             color: #000; box-sizing: border-box; transition: 0.3s;
         }
         input:focus, textarea:focus { border-color: var(--azul-claro); outline: none; background: #fff; }
-        
-        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-        input[type=number] { -moz-appearance: textfield; }
+
+        /* TABLA DE ÍTEMS AJUSTADA */
+        .table-items { width: 100%; border-collapse: separate; border-spacing: 0 10px; margin-top: 20px; table-layout: fixed; }
+        .table-items th { color: #888; padding: 12px; text-align: left; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
+        .table-items td { background: #fafafa; padding: 12px; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+        .table-items td:first-child { border-left: 1px solid #f0f0f0; border-radius: 15px 0 0 15px; width: 50%; }
+        .table-items td:last-child { border-right: 1px solid #f0f0f0; border-radius: 0 15px 15px 0; width: 45px; text-align: center; }
+
+        /* MODO CELULAR PANTALLA: ÍTEM VERTICAL */
+        @media screen and (max-width: 600px) {
+            .table-items, .table-items thead, .table-items tbody, .table-items th, .table-items td, .table-items tr { display: block; width: 100%; }
+            .table-items thead { display: none; }
+            .table-items tr { margin-bottom: 20px; border: 1px solid #eee; border-radius: 20px; padding: 15px; background: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.02); }
+            .table-items td { border: none !important; padding: 8px 0 !important; width: 100% !important; background: transparent !important; }
+            .table-items td::before { content: attr(data-label); display: block; font-size: 10px; color: var(--azul-vibrante); font-weight: 800; text-transform: uppercase; margin-bottom: 4px; }
+            .table-items td:last-child { text-align: right !important; border-top: 1px solid #f0f0f0 !important; margin-top: 10px; padding-top: 15px !important; }
+            .pdf-header { flex-direction: column; text-align: center; gap: 20px; }
+            .grid-header { grid-template-columns: 1fr !important; gap: 15px !important; }
+        }
+
+        .btn-delete { background: none; border: none; color: #ccc; cursor: pointer; font-size: 20px; transition: 0.3s; }
+        .btn-delete:hover { color: var(--danger); transform: scale(1.1); }
+
+        .total-box { 
+            background: var(--azul-oscuro); color: white; padding: 25px 35px; 
+            display: flex; justify-content: space-between; font-weight: bold; 
+            font-size: 1.4rem; border-radius: 20px; margin-top: 30px;
+            box-shadow: 0 15px 30px rgba(10, 25, 49, 0.2);
+        }
 
         .action-area { display: flex; align-items: center; gap: 15px; margin-top: 40px; }
         .btn-generate { 
@@ -61,52 +88,94 @@
         }
         .btn-generate:hover { transform: translateY(-2px); box-shadow: 0 15px 25px rgba(24, 90, 219, 0.3); }
 
-        .btn-logout { background: #eee; color: #666; border: none; padding: 8px 15px; border-radius: 10px; cursor: pointer; font-size: 12px; position: absolute; top: 20px; right: 20px; transition: 0.3s; }
+        .btn-clear-mini { background: #eee; border: none; padding: 18px; border-radius: 15px; cursor: pointer; color: #666; transition: 0.3s; }
+        .btn-clear-mini:hover { background: #ffebeb; color: var(--danger); }
+
+        /* BOTON LOGOUT DANGER */
+        .btn-logout { background: var(--danger); color: white; border: none; padding: 8px 15px; border-radius: 10px; cursor: pointer; font-size: 12px; position: absolute; top: 20px; right: 20px; transition: 0.3s; font-weight: bold; }
+        .btn-logout:hover { filter: brightness(1.2); }
 
         .black-bar-container { 
             background: var(--azul-fondo); color: var(--azul-oscuro); padding: 12px 18px; 
             margin-bottom: 8px; display: flex; align-items: center; border-radius: 12px; 
-            white-space: nowrap !important; overflow: hidden; border: 1px solid rgba(10, 25, 49, 0.1);
+            border: 1px solid rgba(10, 25, 49, 0.1);
         }
         .black-bar-label { font-weight: 800; margin-right: 10px; flex-shrink: 0; font-size: 13px; text-transform: uppercase; }
         .black-bar-input { color: var(--azul-vibrante) !important; border: none !important; background: transparent !important; font-weight: bold !important; padding: 0 !important; margin: 0 !important; width: 100% !important; font-size: 16px; }
 
-        .table-items { width: 100%; border-collapse: separate; border-spacing: 0 10px; margin-top: 20px; }
-        .table-items th { color: #888; padding: 12px; text-align: left; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
-        .table-items td { background: #fafafa; padding: 10px; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; }
-        .table-items td:first-child { border-left: 1px solid #f0f0f0; border-radius: 12px 0 0 12px; }
-        .table-items td:last-child { border-right: 1px solid #f0f0f0; border-radius: 0 12px 12px 0; }
-
-        .btn-delete { background: none; border: none; color: #ccc; cursor: pointer; font-size: 18px; transition: 0.3s; }
-        .btn-delete:hover { color: var(--danger); }
-
-        .total-box { 
-            background: var(--azul-oscuro); color: white; padding: 25px 35px; 
-            display: flex; justify-content: space-between; font-weight: bold; 
-            font-size: 1.4rem; border-radius: 20px; margin-top: 30px;
-            box-shadow: 0 15px 30px rgba(10, 25, 49, 0.2);
-        }
-        
+        /* --- CONFIGURACIÓN DE IMPRESIÓN MAESTRA (SIEMPRE HORIZONTAL) --- */
         @media print {
-            body { background: white; padding: 0; }
-            .no-print, .btn-logout, .btn-delete, .add-row-btn { display: none !important; }
-            .admin-content { display: block !important; box-shadow: none; padding: 0; width: 100%; border: none !important; }
-            input, textarea { border: none !important; background: transparent !important; }
-            .black-bar-container { border: 1px solid #eee !important; background: #f9f9f9 !important; }
-            .total-box { background: #0a1931 !important; color: white !important; -webkit-print-color-adjust: exact; }
-            .table-items td { background: white !important; border-bottom: 1px solid #eee !important; }
-            .grid-header { display: grid !important; grid-template-columns: 1fr 1fr !important; }
+            @page { size: letter; margin: 0; }
+            body { background: white !important; padding: 0; margin: 0; width: 210mm; }
+            .no-print, .btn-logout, .btn-delete, .add-row-btn, .security-notice, .action-area { display: none !important; }
+            .admin-content { display: block !important; box-shadow: none !important; padding: 15mm !important; width: 100%; border: none !important; margin: 0 !important; }
+            
+            /* RESET TOTAL PARA IMPRESIÓN: FUERZA TABLA HORIZONTAL CON BORDE ÚNICO */
+            .table-items { 
+                display: table !important; 
+                width: 100% !important; 
+                table-layout: auto !important; 
+                border-collapse: collapse !important; 
+                border-spacing: 0 !important; 
+                margin-top: 20px !important;
+            }
+            .table-items thead { display: table-header-group !important; }
+            .table-items tbody { display: table-row-group !important; }
+            .table-items tr { display: table-row !important; background: transparent !important; }
+            
+            /* Línea gruesa decorativa bajo encabezados */
+            .table-items th { 
+                display: table-cell !important; 
+                border-bottom: 3px solid var(--azul-oscuro) !important; 
+                padding: 12px 10px !important; 
+                font-weight: 800 !important;
+                color: #000 !important;
+            }
+            
+            /* Línea divisoria suave entre items */
+            .table-items td { 
+                display: table-cell !important; 
+                background: white !important; 
+                border-bottom: 1px solid #eee !important; 
+                padding: 10px 8px !important;
+                border-radius: 0 !important;
+                border-left: none !important;
+                border-right: none !important;
+            }
+            .table-items td::before { display: none !important; }
+            
+            input, textarea { border: none !important; background: transparent !important; padding: 2px !important; font-size: 12pt !important; }
+            .black-bar-container { border: 1px solid #eee !important; background: #f9f9f9 !important; -webkit-print-color-adjust: exact; }
+            .total-box { background: #0a1931 !important; color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; margin-top: 50px !important; }
+            .grid-header { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 30px !important; }
+            .logo-rc { max-width: 100px !important; -webkit-print-color-adjust: exact; }
+
+            /* MENSAJE DE VALIDEZ USA */
+            .validity-message {
+                display: block !important;
+                margin-top: 30px;
+                padding: 15px;
+                background: #f8fafc !important;
+                border-left: 5px solid var(--azul-oscuro) !important;
+                font-size: 11px;
+                color: #334155 !important;
+                line-height: 1.6;
+                -webkit-print-color-adjust: exact;
+            }
         }
 
         .pdf-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
-        .logo-rc { width: 110px; height: auto; border-radius: 50%; border: 3px solid var(--azul-fondo); }
+        .logo-rc { width: 110px; height: auto; border-radius: 50%; border: 3px solid var(--azul-fondo); transition: 0.3s; }
+        
+        /* Mensaje de validez oculto en pantalla, visible solo en PDF */
+        .validity-message { display: none; }
     </style>
 </head>
 <body>
 
     <div id="login" class="login-box">
         <img src="logo2.png" style="width: 100px; margin-bottom: 20px;">
-        <h2 style="color: var(--azul-oscuro);">Robert Construccion</h2>
+        <h2 style="color: var(--azul-oscuro); margin: 0;">Robert Construccion</h2>
         <p style="color: #888; font-size: 14px; margin-bottom: 25px;">Management Portal</p>
         <div class="password-container">
             <input type="password" id="pass" placeholder="Enter Password" onkeypress="handleKeyPress(event)">
@@ -139,34 +208,28 @@
         <div class="grid-header" style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
             <div>
                 <p style="color: var(--azul-oscuro); font-weight: 800; font-size: 11px; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">BILL TO / ADDRESS</p>
-                <textarea id="cliente" rows="4" placeholder="Client Full Name&#10;Job Site Address..."></textarea>
+                <textarea id="cliente" rows="3" placeholder="Client Name & Address"></textarea>
             </div>
             <div>
-                <div class="black-bar-container">
-                    <span class="black-bar-label">Estimate #:</span> 
-                    <input type="text" id="est_num" class="black-bar-input">
-                </div>
-                <div class="black-bar-container">
-                    <span class="black-bar-label">DATE:</span> 
-                    <input type="text" id="fecha_dinamica" class="black-bar-input">
-                </div>
+                <div class="black-bar-container"><span class="black-bar-label">Estimate #:</span> <input type="text" id="est_num" class="black-bar-input"></div>
+                <div class="black-bar-container"><span class="black-bar-label">DATE:</span> <input type="text" id="fecha_dinamica" class="black-bar-input"></div>
             </div>
         </div>
 
         <table class="table-items" id="itemsTable">
             <thead>
                 <tr>
-                    <th>ACTIVITY / DESCRIPTION</th>
+                    <th width="50%">DESCRIPTION</th>
                     <th width="70">QTY</th>
-                    <th width="110">RATE</th>
-                    <th width="110">AMOUNT</th>
-                    <th width="40" class="no-print"></th>
+                    <th width="100">RATE</th>
+                    <th width="100">AMOUNT</th>
+                    <th width="45" class="no-print"></th>
                 </tr>
             </thead>
             <tbody></tbody>
         </table>
         
-        <button class="btn no-print add-row-btn" onclick="addRow()" style="margin-top:10px; background: none; border: 2px dashed var(--azul-claro); color: var(--azul-vibrante); padding: 12px; width: 100%; border-radius: 12px; cursor: pointer; font-weight: bold;">
+        <button class="btn no-print add-row-btn" onclick="addRow()" style="margin-top:10px; background: none; border: 2px dashed var(--azul-claro); color: var(--azul-vibrante); padding: 12px; width: 100%; border-radius: 12px; cursor: pointer; font-weight: bold; transition: 0.3s;">
             <i class="fas fa-plus-circle"></i> Add New Line Item
         </button>
 
@@ -175,14 +238,19 @@
             <span>$<span id="grand-total">0.00</span></span>
         </div>
 
-        <div style="margin-top: 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+        <div class="validity-message">
+            <strong>Terms & Conditions:</strong><br>
+            This estimate is valid for <strong>30 days</strong> from the date issued. Please note that prices are subject to change after this period due to market fluctuations in material and labor costs.
+        </div>
+
+        <div style="margin-top: 50px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
             <div style="border-top: 1px solid #ddd; padding-top: 10px; font-size: 11px; color: #888; font-weight: bold; text-transform: uppercase;">Accepted By (Client Signature)</div>
             <div style="border-top: 1px solid #ddd; padding-top: 10px; font-size: 11px; color: #888; font-weight: bold; text-transform: uppercase;">Accepted Date</div>
         </div>
 
         <div class="no-print" style="margin-top: 50px; border-top: 2px solid var(--azul-fondo); padding-top: 30px;">
             <h3 style="color: var(--azul-oscuro); margin-bottom: 20px;"><i class="fas fa-history"></i> Recent Estimates</h3>
-            <div id="history-container" style="max-height: 400px; overflow-y: auto; background: #fafafa; border-radius: 15px; padding: 15px; border: 1px solid #eee;">
+            <div id="history-container" style="max-height: 250px; overflow-y: auto; background: #fafafa; border-radius: 15px; padding: 15px; border: 1px solid #eee;">
                 <p style="text-align: center; color: #888;">Loading history...</p>
             </div>
         </div>
@@ -200,43 +268,27 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
         let datePicker;
-
-        window.onload = function() {
-            if(sessionStorage.getItem("authenticated") === "true") { 
-                showPanel(); 
-            }
-        }
-
-        function handleKeyPress(e) { if (e.keyCode === 13) { checkPass(); } }
-
+        window.onload = function() { if(sessionStorage.getItem("authenticated") === "true") { showPanel(); } }
+        function handleKeyPress(e) { if (e.keyCode === 13) checkPass(); }
         function togglePassword() {
-            const passInput = document.getElementById("pass");
-            const eyeIcon = document.getElementById("eye-icon");
-            if (passInput.type === "password") {
-                passInput.type = "text";
-                eyeIcon.classList.replace("fa-eye", "fa-eye-slash");
-            } else {
-                passInput.type = "password";
-                eyeIcon.classList.replace("fa-eye-slash", "fa-eye");
-            }
+            const p = document.getElementById("pass");
+            const i = document.getElementById("eye-icon");
+            p.type = (p.type === "password") ? "text" : "password";
+            i.classList.toggle("fa-eye-slash");
         }
-
         function checkPass() {
             if(document.getElementById('pass').value === "Nelson2026#") {
                 sessionStorage.setItem("authenticated", "true");
                 showPanel();
-            } else { alert("Incorrect password"); }
+            } else alert("Incorrect password");
         }
-
         function showPanel() {
             document.getElementById('login').style.display = 'none';
             document.getElementById('panel').style.display = 'block';
             resetForm();
-            loadHistory(); // CARGA BITÁCORA AL ENTRAR
+            loadHistory();
         }
-
-        function manualReset() { if(confirm("Are you sure you want to clear the form?")) { resetForm(); } }
-
+        function manualReset() { if(confirm("Are you sure you want to clear the form?")) resetForm(); }
         function resetForm() {
             const now = new Date();
             const folio = "RC-" + now.getFullYear().toString().substr(-2) + (now.getMonth() + 1).toString().padStart(2, '0') + now.getDate().toString().padStart(2, '0') + now.getHours().toString().padStart(2, '0') + now.getMinutes().toString().padStart(2, '0');
@@ -245,93 +297,53 @@
             document.getElementById('grand-total').innerText = "0.00";
             document.getElementById("itemsTable").getElementsByTagName('tbody')[0].innerHTML = "";
             addRow();
-            if (datePicker) datePicker.destroy();
             datePicker = flatpickr("#fecha_dinamica", { defaultDate: "today", dateFormat: "F j, Y" });
         }
-
-        // CARGA BITÁCORA DESDE LA CARPETA RC
         async function loadHistory() {
             const container = document.getElementById('history-container');
             try {
                 const response = await fetch('http://54.84.170.85/rc/Bitacora/get_history.php');
                 const data = await response.json();
-                if (data.length === 0) {
-                    container.innerHTML = '<p style="text-align: center; color: #888;">No records found.</p>';
-                    return;
-                }
-                let html = '<table style="width:100%; font-size: 13px; border-collapse: collapse;">';
-                html += '<tr style="text-align:left; color:#888; border-bottom:1px solid #eee;"><th style="padding:10px;">ID</th><th>Client</th><th>Date</th><th style="text-align:right; padding:10px;">Amount</th></tr>';
+                if (data.length === 0) { container.innerHTML = '<p>No records found.</p>'; return; }
+                let html = '<table style="width:100%; font-size: 13px;">';
                 data.forEach(row => {
-                    html += `<tr style="border-bottom: 1px solid #f0f0f0;">
-                        <td style="padding:10px; font-weight:bold; color:var(--azul-vibrante);">${row.estimate}</td>
-                        <td>${row.name}</td>
-                        <td>${row.date}</td>
-                        <td style="text-align:right; padding:10px; font-weight:bold;">$${row.total}</td>
-                    </tr>`;
+                    html += `<tr><td style="padding:10px; font-weight:bold; color:var(--azul-vibrante);">${row.estimate}</td><td>${row.name}</td><td style="text-align:right;">$${row.total}</td></tr>`;
                 });
                 container.innerHTML = html + '</table>';
-            } catch (error) { container.innerHTML = '<p style="text-align: center; color: var(--danger);">Connection error with database.</p>'; }
+            } catch (e) { container.innerHTML = '<p>Error loading history.</p>'; }
         }
-
-        // GUARDA EN BITÁCORA DE LA CARPETA RC
         async function sendToHistoryServer() {
-            const items = [];
-            const rows = document.getElementById("itemsTable").getElementsByTagName('tbody')[0].rows;
-            for (let i = 0; i < rows.length; i++) {
-                items.push({
-                    desc: rows[i].cells[0].getElementsByTagName('input')[0].value || "N/A",
-                    qty: rows[i].cells[1].getElementsByTagName('input')[0].value || 0,
-                    rate: rows[i].cells[2].getElementsByTagName('input')[0].value || 0
-                });
-            }
-            const lines = document.getElementById('cliente').value.split('\n');
-            const historyData = {
+            const data = {
                 estimate: document.getElementById('est_num').value,
                 date: document.getElementById('fecha_dinamica').value,
-                client_name: lines[0] || "No Name",
-                address: lines.slice(1).join(", ") || "No Address",
-                items: items,
+                client_name: document.getElementById('cliente').value.split('\n')[0] || "No Name",
                 total: document.getElementById('grand-total').innerText
             };
-            try {
-                await fetch('http://54.84.170.85/rc/Bitacora/save_history.php', {
-                    method: 'POST',
-                    mode: 'cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(historyData)
-                });
-            } catch (error) { console.error("Error saving history:", error); }
+            try { await fetch('http://54.84.170.85/rc/Bitacora/save_history.php', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }); } catch (e) { }
         }
-
         function generatePDF() {
             sendToHistoryServer();
             window.print();
-            setTimeout(() => { 
-                loadHistory(); 
-                if(confirm("Clear form for next customer?")) { resetForm(); } 
-            }, 1500);
+            setTimeout(() => { loadHistory(); if(confirm("Clear form?")) resetForm(); }, 1500);
         }
-
         function logout() { sessionStorage.removeItem("authenticated"); location.reload(); }
-
         function addRow() {
             const tbody = document.getElementById("itemsTable").getElementsByTagName('tbody')[0];
             const row = tbody.insertRow();
             row.innerHTML = `
-                <td><input type="text" placeholder="Service description..."></td>
-                <td><input type="number" value="1" oninput="calc()"></td>
-                <td><input type="number" placeholder="0.00" oninput="calc()"></td>
-                <td><input type="number" readonly value="0.00"></td>
+                <td data-label="Description"><input type="text" placeholder="Activity..."></td>
+                <td data-label="Qty"><input type="number" value="1" oninput="calc()"></td>
+                <td data-label="Rate"><input type="number" placeholder="0.00" oninput="calc()"></td>
+                <td data-label="Amount"><input type="number" readonly value="0.00"></td>
                 <td class="no-print"><button class="btn-delete" onclick="this.closest('tr').remove(); calc();"><i class="fas fa-times-circle"></i></button></td>
             `;
         }
-
         function calc() {
             let total = 0;
             const rows = document.getElementById("itemsTable").getElementsByTagName('tbody')[0].rows;
             for (let i = 0; i < rows.length; i++) {
-                const q = rows[i].cells[1].getElementsByTagName('input')[0].value || 0;
-                const r = rows[i].cells[2].getElementsByTagName('input')[0].value || 0;
+                const q = parseFloat(rows[i].cells[1].getElementsByTagName('input')[0].value) || 0;
+                const r = parseFloat(rows[i].cells[2].getElementsByTagName('input')[0].value) || 0;
                 const sub = q * r;
                 rows[i].cells[3].getElementsByTagName('input')[0].value = sub.toFixed(2);
                 total += sub;
